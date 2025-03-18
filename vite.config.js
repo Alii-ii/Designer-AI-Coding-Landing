@@ -115,9 +115,14 @@ export default defineConfig({
     host: true
   },
   build: {
-    outDir: 'dist',
+    outDir: OUT_DIR,
     assetsDir: 'assets',
-    emptyOutDir: true
+    emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
   },
   resolve: {
     alias: {
