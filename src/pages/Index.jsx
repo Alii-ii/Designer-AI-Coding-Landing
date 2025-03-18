@@ -9,9 +9,9 @@ const NavBar = () => {
   const [showModal, setShowModal] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 h-14 bg-transparent backdrop-blur-md z-50">
-      <div className="max-w-[1440px] mx-auto px-3 h-full flex items-center">
-        <img src="https://nocode.meituan.com/photo/search?keyword=logo,gray&width=28&height=28" alt="Logo" className="w-7 h-7 ml-3" />
+    <nav className="fixed top-0 left-0 right-0 h-14 bg-black/75 backdrop-blur-md z-50 w-full">
+      <div className="w-full h-full flex items-center px-6">
+        <img src="https://nocode.meituan.com/photo/search?keyword=logo,gray&width=28&height=28" alt="Logo" className="w-7 h-7" />
         <span className="text-white text-base font-semibold ml-2">设计部 AI Coding 活动</span>
         
         <div className="flex items-center mx-auto space-x-8">
@@ -167,7 +167,6 @@ const Index = () => {
     <div className="min-h-screen bg-black">
       <NavBar />
       
-      {/* 报名海报区域 */}
       <div className="w-full bg-gradient-to-b from-purple-900 to-black pt-14">
         <div className="max-w-[1440px] min-w-[1270px] mx-auto">
           <a href="https://km.sankuai.com/collabpage/2704338587" target="_blank" rel="noopener noreferrer">
@@ -180,11 +179,9 @@ const Index = () => {
         </div>
       </div>
 
-      {/* 比赛详情区域 */}
       <div id="competition-details" className="max-w-[1440px] min-w-[1270px] mx-auto relative">
         <AnchorNav sections={sections} />
 
-        {/* 大赛说明 */}
         <div id="competition-intro" className="relative">
           <img 
             src="https://nocode.meituan.com/photo/search?keyword=competition,introduction&width=1440&height=600" 
@@ -201,7 +198,6 @@ const Index = () => {
           </a>
         </div>
 
-        {/* 赛道概览 */}
         <div id="track-overview">
           <img 
             src="https://nocode.meituan.com/photo/search?keyword=track,overview,header&width=1440&height=200" 
@@ -217,7 +213,6 @@ const Index = () => {
           </div>
         </div>
 
-        {/* 案例参考 */}
         <div id="case-reference">
           <img 
             src="https://nocode.meituan.com/photo/search?keyword=case,reference,header&width=1440&height=200" 
@@ -236,7 +231,6 @@ const Index = () => {
           </div>
         </div>
 
-        {/* 赛程安排 */}
         <div id="schedule">
           <img 
             src="https://nocode.meituan.com/photo/search?keyword=competition,schedule&width=1440&height=600" 
@@ -245,7 +239,6 @@ const Index = () => {
           />
         </div>
 
-        {/* 奖项设置 */}
         <div id="awards">
           <img 
             src="https://nocode.meituan.com/photo/search?keyword=awards,prizes&width=1440&height=600" 
@@ -254,7 +247,6 @@ const Index = () => {
           />
         </div>
 
-        {/* 比赛帮助 */}
         <div id="help">
           <img 
             src="https://nocode.meituan.com/photo/search?keyword=competition,help&width=1440&height=600" 
