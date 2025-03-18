@@ -169,12 +169,22 @@ const Index = () => {
       
       <div className="w-full bg-gradient-to-b from-purple-900 to-black pt-14">
         <div className="max-w-[1440px] min-w-[1270px] mx-auto">
-          <a href="https://km.sankuai.com/collabpage/2704338587" target="_blank" rel="noopener noreferrer">
-            <img 
-              src="https://nocode.meituan.com/photo/search?keyword=poster,competition&width=1440&height=800" 
-              alt="Competition Poster"
-              className="w-full object-cover"
-            />
+          <a 
+            href="https://km.sankuai.com/collabpage/2704338587" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="block group relative"
+          >
+            <div className="relative overflow-hidden">
+              <img 
+                src="https://nocode.meituan.com/photo/search?keyword=poster,competition&width=1440&height=800" 
+                alt="Competition Poster"
+                className="w-full object-cover transition-all duration-300 
+                  group-hover:scale-[1.025] group-hover:brightness-105
+                  active:brightness-95"
+              />
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/5" />
+            </div>
           </a>
         </div>
       </div>
@@ -220,13 +230,52 @@ const Index = () => {
             className="w-full object-cover"
           />
           <div className="grid grid-cols-3 gap-6 p-6">
-            {[...Array(6)].map((_, i) => (
-              <img 
+            {[
+              {
+                url: 'https://km.sankuai.com/collabpage/2677633608',
+                clickable: true
+              },
+              {
+                url: 'https://km.sankuai.com/collabpage/2704573004',
+                clickable: true
+              },
+              {
+                url: 'https://km.sankuai.com/community/article/2703079719',
+                clickable: true
+              },
+              { clickable: false },
+              { clickable: false },
+              { clickable: false }
+            ].map((item, i) => (
+              <div 
                 key={i}
-                src={`https://nocode.meituan.com/photo/search?keyword=case,example${i+1}&width=400&height=300`}
-                alt={`Case Example ${i+1}`}
-                className="w-full object-cover rounded-lg"
-              />
+                className="relative group"
+              >
+                {item.clickable ? (
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block"
+                  >
+                    <img 
+                      src={`https://nocode.meituan.com/photo/search?keyword=case,example${i+1}&width=400&height=300`}
+                      alt={`Case Example ${i+1}`}
+                      className="w-full object-cover rounded-xl transition-all duration-200 
+                        group-hover:ring-2 group-hover:ring-white
+                        active:brightness-80"
+                    />
+                  </a>
+                ) : (
+                  <img 
+                    src={`https://nocode.meituan.com/photo/search?keyword=case,example${i+1}&width=400&height=300`}
+                    alt={`Case Example ${i+1}`}
+                    className="w-full object-cover rounded-xl transition-all duration-200 
+                      group-hover:ring-2 group-hover:ring-white
+                      active:brightness-80"
+                  />
+                )}
+              </div>
             ))}
           </div>
         </div>
@@ -247,14 +296,115 @@ const Index = () => {
           />
         </div>
 
-        <div id="help">
-          <img 
-            src="https://nocode.meituan.com/photo/search?keyword=competition,help&width=1440&height=600" 
-            alt="Competition Help"
-            className="w-full object-cover"
-          />
+        <div id="help" className="bg-black py-16">
+          <div className="max-w-[1440px] min-w-[1270px] mx-auto px-6">
+            <div className="grid grid-cols-2 gap-12">
+              {/* 左列：常见问题 */}
+              <div className="space-y-6">
+                <h3 className="text-2xl font-normal text-white">常见问题</h3>
+                <div className="space-y-3">
+                  {[1, 2, 3].map((i) => (
+                    <img
+                      key={i}
+                      src={`https://nocode.meituan.com/photo/search?keyword=faq,question${i}&width=600&height=200`}
+                      alt={`FAQ Question ${i}`}
+                      className="w-full rounded-xl"
+                    />
+                  ))}
+                </div>
+              </div>
+
+              {/* 右列：推荐工具和技术加油站 */}
+              <div className="space-y-12">
+                {/* 推荐工具 */}
+                <div className="space-y-6">
+                  <h3 className="text-2xl font-normal text-white">推荐工具</h3>
+                  <div className="grid grid-cols-5 gap-4">
+                    {[
+                      { name: 'NoCode', url: 'https://nocode.sankuai.com/' },
+                      { name: 'MCopilot', url: 'https://mcopilot.sankuai.com/' },
+                      { name: 'Cursor', url: 'https://www.cursor.com/cn' },
+                      { name: 'Onlook', url: 'https://onlook.com/' },
+                      { name: 'V0', url: 'https://v0.dev/' }
+                    ].map((tool, i) => (
+                      <div key={i} className="text-center">
+                        <a
+                          href={tool.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block group"
+                        >
+                          <img
+                            src={`https://nocode.meituan.com/photo/search?keyword=tool,${tool.name.toLowerCase()}&width=200&height=200`}
+                            alt={tool.name}
+                            className="w-full rounded-xl transition-all duration-200 
+                              group-hover:ring-2 group-hover:ring-white
+                              active:brightness-80"
+                          />
+                          <span className="block mt-3 text-white">{tool.name}</span>
+                        </a>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* 技术加油站 */}
+                <div className="space-y-6">
+                  <h3 className="text-2xl font-normal text-white">技术加油站</h3>
+                  <div className="space-y-4">
+                    {[
+                      {
+                        text: 'NoCode使用手册',
+                        url: 'https://km.sankuai.com/collabpage/2702228870'
+                      },
+                      {
+                        text: 'NoCde实践案例与使用技巧',
+                        url: 'https://km.sankuai.com/collabpage/2702637865'
+                      },
+                      {
+                        text: 'AI产品设计工具',
+                        url: 'https://km.sankuai.com/collabpage/2703705501?quote-id=2703705501--165cb1ee-f012-43d2-94c5-1b7e7e970606&discussion-id=1892876219356745736&comment-id=1892876219369250829'
+                      }
+                    ].map((doc, i) => (
+                      <a
+                        key={i}
+                        href={doc.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-blue-500 hover:text-blue-400"
+                      >
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                          />
+                        </svg>
+                        <span className="text-base font-medium">{doc.text}</span>
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* 页脚 */}
+      <footer className="w-full h-[90px]">
+        <img 
+          src="https://nocode.meituan.com/photo/search?keyword=footer,placeholder,gray&width=1920&height=90" 
+          alt="Footer"
+          className="w-full h-full object-cover"
+        />
+      </footer>
     </div>
   );
 };
