@@ -4,12 +4,9 @@ import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 
 const isProdEnv = process.env.NODE_ENV === 'production';
-const PUBLIC_PATH = isProdEnv ? process.env.PUBLIC_PATH || '/' : '/';
-const OUT_DIR = 'build';
-
-export default defineConfig({
-  base: '/',
-  plugins: isProdEnv ? [react()] : [
+const PUBLIC_PATH = isProdEnv ? process.env.PUBLIC_PATH + "/" + process.env.CHAT_VARIABLE : process.env.PUBLIC_PATH;
+const OUT_DIR = isProdEnv ? 'build/' + process.env.CHAT_VARIABLE : 'build';
+const PLUGINS  = isProdEnv ? [react()] : [
     react(),
     {
       name: 'html-transform',
@@ -107,27 +104,36 @@ export default defineConfig({
           </head>
           `
         );
-      }
+      },
     }
-  ],
+];
+
+// https://vitejs.dev/config/
+export default defineConfig({
   server: {
-    port: 8082,
-    host: true
-  },
-  build: {
-    outDir: OUT_DIR,
-    assetsDir: 'assets',
-    emptyOutDir: true,
-    rollupOptions: {
-      output: {
-        manualChunks: undefined
-      }
+    host: "::",
+    port: "8080",
+    hmr: {
+      overlay: false
     }
+  },
+  plugins: [
+    PLUGINS
+  ],
+  base: PUBLIC_PATH,
+  build: {
+    outDir: OUT_DIR
   },
   resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-      'lib': resolve(__dirname, 'lib')
-    }
-  }
+    alias: [
+      {
+        find: "@",
+        replacement: fileURLToPath(new URL("./src", import.meta.url)),
+      },
+      {
+        find: "lib",
+        replacement: resolve(__dirname, "lib"),
+      },
+    ],
+  },
 });
