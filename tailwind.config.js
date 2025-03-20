@@ -1,11 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   darkMode: ["class"],
   content: [
     "./pages/**/*.{js,jsx}",
     "./components/**/*.{js,jsx}",
     "./app/**/*.{js,jsx}",
     "./src/**/*.{js,jsx}",
+    "./index.html",
   ],
   prefix: "",
   theme: {
@@ -70,6 +71,12 @@ module.exports = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        'ping-slow': 'ping 2s cubic-bezier(0, 0, 0.2, 1) infinite',
+        'ping-slower': 'ping 2.5s cubic-bezier(0, 0, 0.2, 1) infinite',
+        'ping-slowest': 'ping 3s cubic-bezier(0, 0, 0.2, 1) infinite',
+        'glow1': 'glow1 6s ease-in-out infinite',
+        'glow2': 'glow2 6s ease-in-out infinite',
+        'glow3': 'glow3 6s ease-in-out infinite',
       },
     },
   },

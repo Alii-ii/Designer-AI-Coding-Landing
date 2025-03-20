@@ -1,89 +1,140 @@
-import { useState, useEffect } from 'react';
+// 测试热更新 - HMR Test
+import { useState, useEffect, useRef } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
 import { Tooltip } from "@/components/ui/tooltip";
 import { TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { motion, AnimatePresence } from 'framer-motion';
+import { Music2, Pause } from 'lucide-react';
+import posterImage from '@/assets/images/poster.svg';
+import highlightsImage from '@/assets/images/intro/highlights.svg';
+import requirementsImage from '@/assets/images/intro/requirements.svg';
+import deliverablesImage from '@/assets/images/intro/deliverables.svg';
+import trackDetailsImage from '@/assets/images/track/track-details.svg';
+import caseExample1Image from '@/assets/images/case/case-example1.svg';
+import caseExample2Image from '@/assets/images/case/case-example2.svg';
+import caseExample3Image from '@/assets/images/case/case-example3.svg';
+import caseExample4Image from '@/assets/images/case/case-example4.svg';
+import caseExample5Image from '@/assets/images/case/case-example5.svg';
+import caseExample6Image from '@/assets/images/case/case-example6.svg';
+import scheduleImage from '@/assets/images/schedule/schedule.svg';
+import faq1Image from '@/assets/images/help/faq1.svg';
+import faq2Image from '@/assets/images/help/faq2.svg';
+import faq3Image from '@/assets/images/help/faq3.svg';
+import nocodeToolImage from '@/assets/images/tools/nocode.svg';
+import mcopilotToolImage from '@/assets/images/tools/mcopilot.svg';
+import cursorToolImage from '@/assets/images/tools/cursor.svg';
+import onlookToolImage from '@/assets/images/tools/onlook.svg';
+import v0ToolImage from '@/assets/images/tools/v0.svg';
+import footerImage from '@/assets/images/footer/footer.svg';
 
-const NavBar = () => {
-  const [showModal, setShowModal] = useState(false);
+// 暂时注释掉不存在的图片引用
+// import faq1Image from '@/assets/images/help/faq1.svg';
+// import faq2Image from '@/assets/images/help/faq2.svg';
+// import faq3Image from '@/assets/images/help/faq3.svg';
+
+const MusicPlayer = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState(null);
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.5;
+    }
+  }, []);
+
+  const togglePlay = () => {
+    if (!isLoaded) return;
+    
+    if (isPlaying) {
+      audioRef.current.pause();
+    } else {
+      const playPromise = audioRef.current.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          console.error("播放出错:", error);
+          setError(error);
+        });
+      }
+    }
+    setIsPlaying(!isPlaying);
+  };
+
+  const handleCanPlayThrough = () => {
+    setIsLoaded(true);
+    setError(null);
+  };
+
+  const handleError = (e) => {
+    console.error("音频加载出错:", e);
+    setError(e);
+    setIsLoaded(false);
+  };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 h-14 bg-black/75 backdrop-blur-md z-50 w-full">
-      <div className="w-full h-full flex items-center px-6">
-        <img src="https://nocode.meituan.com/photo/search?keyword=logo,gray&width=28&height=28" alt="Logo" className="w-7 h-7" />
-        <span className="text-white text-base font-semibold ml-2">设计部 AI Coding 活动</span>
-        
-        <div className="flex items-center mx-auto space-x-8">
-          <button className="text-white text-base font-medium">首页</button>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <button className="text-white text-base opacity-40">参赛作品</button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>敬请期待</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <button className="text-white text-base opacity-40">获奖名单</button>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>敬请期待</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-
+    <div className="flex items-center">
+      <div className="relative">
+        {isPlaying && (
+          <>
+            <div className="absolute inset-0 rounded-full animate-ping-slow bg-white/20" />
+            <div className="absolute inset-[-4px] rounded-full animate-ping-slower bg-white/10" />
+            <div className="absolute inset-[-8px] rounded-full animate-ping-slowest bg-white/5" />
+          </>
+        )}
         <button
-          onClick={() => setShowModal(true)}
-          className="bg-white text-black font-semibold text-sm px-4 h-[38px] rounded-lg"
+          onClick={togglePlay}
+          disabled={!isLoaded}
+          className={`relative w-[28px] h-[28px] rounded-full border-[1.5px] border-white/30 flex items-center justify-center transition-all duration-300 ${
+            isLoaded 
+              ? `bg-white/5 hover:bg-white/10 ${isPlaying ? 'scale-110' : 'scale-100'}` 
+              : 'bg-white/5 opacity-50 cursor-not-allowed'
+          }`}
         >
-          投稿
+          {isPlaying ? (
+            <Pause className="w-4 h-4 text-white" />
+          ) : (
+            <Music2 className="w-4 h-4 text-white" />
+          )}
         </button>
       </div>
+      <audio
+        ref={audioRef}
+        src="/music/background -music.mp3"
+        onCanPlayThrough={handleCanPlayThrough}
+        onError={handleError}
+        loop
+      />
+    </div>
+  );
+};
 
-      <Transition appear show={showModal} as={Fragment}>
-        <Dialog as="div" className="relative z-50" onClose={() => setShowModal(false)}>
-          <Transition.Child
-            as={Fragment}
-            enter="ease-out duration-300"
-            enterFrom="opacity-0"
-            enterTo="opacity-100"
-            leave="ease-in duration-200"
-            leaveFrom="opacity-100"
-            leaveTo="opacity-0"
-          >
-            <div className="fixed inset-0 bg-black bg-opacity-25" />
-          </Transition.Child>
+const NavBar = () => {
+  const [scrollProgress, setScrollProgress] = useState(0);
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4">
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
-              >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                  <Dialog.Title
-                    as="h3"
-                    className="text-lg font-medium leading-6 text-gray-900"
-                  >
-                    敬请期待
-                  </Dialog.Title>
-                </Dialog.Panel>
-              </Transition.Child>
-            </div>
-          </div>
-        </Dialog>
-      </Transition>
+  useEffect(() => {
+    const handleScroll = () => {
+      const halfViewport = window.innerHeight / 2;
+      const progress = Math.min(window.scrollY / halfViewport, 1);
+      setScrollProgress(progress);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <nav className={`fixed top-0 left-0 right-0 h-14 z-50 w-full transition-all duration-300`}
+      style={{
+        backgroundColor: `rgba(0, 0, 0, ${scrollProgress * 0.75})`,
+        backdropFilter: `blur(${scrollProgress * 8}px)`
+      }}
+    >
+      <div className="w-full h-full flex items-center justify-between px-6">
+        <span className="text-white text-base font-semibold">{'{ AI Coding _ 美团设计部 }'}</span>
+        <MusicPlayer />
+      </div>
     </nav>
   );
 };
@@ -132,16 +183,17 @@ const AnchorNav = ({ sections }) => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="fixed right-6 top-24 bg-black bg-opacity-30 backdrop-blur-md rounded-lg p-4"
+          className="fixed right-4 top-[72px] z-[100] bg-black bg-opacity-30 backdrop-blur-md rounded-lg p-4"
         >
           <div className="flex flex-col space-y-4">
             {sections.map((section) => (
               <button
                 key={section.id}
                 onClick={() => scrollToSection(section.id)}
-                className={`text-white text-sm ${
-                  activeSection === section.id ? 'font-bold' : 'opacity-60'
-                }`}
+                className={`text-white text-sm transition-all duration-200
+                  ${activeSection === section.id 
+                    ? 'font-bold' 
+                    : 'opacity-60 hover:opacity-100'}`}
               >
                 {section.title}
               </button>
@@ -153,164 +205,348 @@ const AnchorNav = ({ sections }) => {
   );
 };
 
+const AnimatedTitle = ({ text }) => {
+  const [direction, setDirection] = useState('left');
+  const [key, setKey] = useState(0);
+  const titleRef = useRef(null);
+
+  const handleMouseEnter = (e) => {
+    if (!titleRef.current) return;
+    const rect = titleRef.current.getBoundingClientRect();
+    const mouseX = e.clientX;
+    const titleCenterX = rect.left + rect.width / 2;
+    setDirection(mouseX < titleCenterX ? 'left' : 'right');
+    setKey(prev => prev + 1);
+  };
+
+  return (
+    <div 
+      ref={titleRef}
+      className="w-full flex items-center justify-center cursor-default px-20"
+      onMouseEnter={handleMouseEnter}
+      style={{ margin: '-40px 0' }}
+    >
+      <h2 className="text-[36px] font-semibold text-white flex py-10">
+        {text.split('').map((char, index, array) => {
+          const isBracket = char === '{' || char === '}';
+          const isChinese = /[\u4e00-\u9fa5]/.test(char);
+          const spacingClass = isBracket ? 'mx-[12px]' : (isChinese ? 'mx-[0.5px]' : '');
+          
+          const delay = direction === 'left' 
+            ? index * 30 
+            : (array.length - 1 - index) * 30;
+          
+          return (
+            <motion.span
+              key={`${index}-${key}`}
+              className={`inline-block ${spacingClass}`}
+              initial={{ y: 0 }}
+              animate={{
+                y: [0, -8, 0]
+              }}
+              transition={{
+                duration: 0.4,
+                ease: "easeInOut",
+                delay: delay * 0.001,
+                times: [0, 0.5, 1]
+              }}
+            >
+              {char}
+            </motion.span>
+          );
+        })}
+      </h2>
+    </div>
+  );
+};
+
 const Index = () => {
   const sections = [
-    { id: 'competition-intro', title: '大赛说明' },
-    { id: 'track-overview', title: '赛道概览' },
-    { id: 'case-reference', title: '案例参考' },
-    { id: 'schedule', title: '赛程安排' },
-    { id: 'awards', title: '奖项设置' },
-    { id: 'help', title: '比赛帮助' }
+    { id: 'competition-intro', title: '{ 大赛说明 }' },
+    { id: 'track-overview', title: '{ 赛道概览 }' },
+    { id: 'case-reference', title: '{ 案例参考 }' },
+    { id: 'schedule', title: '{ 赛程&奖项 }' },
+    { id: 'help', title: '{ 比赛帮助 }' }
   ];
 
   return (
     <div className="min-h-screen bg-black">
       <NavBar />
       
-      <div className="w-full bg-gradient-to-b from-purple-900 to-black pt-14">
-        <div className="max-w-[1440px] min-w-[1270px] mx-auto">
-          <a 
-            href="https://km.sankuai.com/collabpage/2704338587" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="block group relative"
-          >
-            <div className="relative overflow-hidden">
+      {/* 首屏 */}
+      <div className="relative w-full h-screen overflow-hidden">
+        {/* 背景部分 */}
+        <div className="absolute inset-0 w-full h-full">
+          <img 
+            src={posterImage}
+            alt="Background"
+            className="w-full h-full object-cover blur-2xl scale-110"
+          />
+          <div className="absolute inset-0 bg-black/40" />
+        </div>
+        
+        {/* 海报主体部分 */}
+        <div className="relative h-full">
+          <div className="absolute inset-0 flex flex-col items-center justify-center">
+            <div className="relative w-[2560px] h-screen overflow-hidden"
+              style={{
+                maskImage: 'linear-gradient(to right, transparent, black 400px, black calc(100% - 400px), transparent)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent, black 400px, black calc(100% - 400px), transparent)'
+              }}
+            >
               <img 
-                src="https://nocode.meituan.com/photo/search?keyword=poster,competition&width=1440&height=800" 
+                src={posterImage}
                 alt="Competition Poster"
-                className="w-full object-cover transition-all duration-300 
-                  group-hover:scale-[1.025] group-hover:brightness-105
-                  active:brightness-95"
+                className="w-[2560px] h-full object-cover"
               />
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/5" />
             </div>
-          </a>
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-[142px] z-20">
+              <a 
+                href="https://km.sankuai.com/collabpage/2704338587" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-block h-[60px] px-8 rounded-full bg-black/30 backdrop-blur-md border-2 border-[#D4FC82] text-[#D4FC82] text-[20px] flex items-center justify-center transition-all duration-100 hover:border-[3px] hover:font-medium whitespace-nowrap"
+              >
+                立即报名
+              </a>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div id="competition-details" className="max-w-[1440px] min-w-[1270px] mx-auto relative">
-        <AnchorNav sections={sections} />
+      <div id="competition-details" className="w-full max-w-[1440px] mx-auto relative">
 
+        {/* 右侧锚点导航 */}
+        <div className="fixed right-4 top-[72px] z-[100]">
+          <AnchorNav sections={sections} />
+        </div>
+
+        {/* 2屏：大赛说明 */}
         <div id="competition-intro" className="relative">
-          <img 
-            src="https://nocode.meituan.com/photo/search?keyword=competition,introduction&width=1440&height=600" 
-            alt="Competition Introduction"
-            className="w-full object-cover"
-          />
-          <a 
-            href="https://km.sankuai.com/collabpage/2704898611"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute left-[60px] bottom-6 bg-white bg-opacity-80 backdrop-blur-sm text-black text-sm font-normal h-12 px-6 rounded-full flex items-center"
-          >
-            查看提交模版
-          </a>
-        </div>
-
-        <div id="track-overview">
-          <img 
-            src="https://nocode.meituan.com/photo/search?keyword=track,overview,header&width=1440&height=200" 
-            alt="Track Overview Header"
-            className="w-full object-cover"
-          />
-          <div className="h-[600px] overflow-y-auto">
-            <img 
-              src="https://nocode.meituan.com/photo/search?keyword=track,details&width=1440&height=1200" 
-              alt="Track Details"
-              className="w-full object-cover"
-            />
+          <div className="w-full h-[224px] flex items-end justify-center pb-10">
+            <AnimatedTitle text={sections[0].title} />
           </div>
-        </div>
+          {/* 大赛说明内容 */}
+          <div className="flex flex-col items-center gap-4 mb-10">
+            <p className="w-[820px] text-base font-normal text-white text-center">
+              设计师们，在日常工作中，你是否常常被创意落地难而困扰？好不容易构思出极具想象力的设计方案，却因代码实现的复杂而举步维艾。但现在，AI Coding 能为你化解这些痛点！
+            </p>
+            <p className="w-[820px] text-base font-normal text-white text-center">
+              本次 AI Coding 设计活动由基础研发设计中心发起，面向设计部全体设计师，快来尽情发挥你的创意吧！
+            </p>
+          </div>
 
-        <div id="case-reference">
-          <img 
-            src="https://nocode.meituan.com/photo/search?keyword=case,reference,header&width=1440&height=200" 
-            alt="Case Reference Header"
-            className="w-full object-cover"
-          />
-          <div className="grid grid-cols-3 gap-6 p-6">
-            {[
-              {
-                url: 'https://km.sankuai.com/collabpage/2677633608',
-                clickable: true
-              },
-              {
-                url: 'https://km.sankuai.com/collabpage/2704573004',
-                clickable: true
-              },
-              {
-                url: 'https://km.sankuai.com/community/article/2703079719',
-                clickable: true
-              },
-              { clickable: false },
-              { clickable: false },
-              { clickable: false }
-            ].map((item, i) => (
-              <div 
-                key={i}
-                className="relative group"
-              >
-                {item.clickable ? (
-                  <a
-                    href={item.url}
+          {/* 3卡片*/}
+          <div className="flex justify-center">
+            <div className="grid grid-cols-3 gap-6 group">
+              <div className="relative w-[400px]">
+                <img 
+                  src={highlightsImage}
+                  alt="活动亮点"
+                  className="w-full object-contain bg-[#1a1a1a] rounded-xl origin-bottom-right -rotate-6 group-hover:rotate-0 transition-transform duration-300"
+                />
+              </div>
+              <div className="relative">
+                <img 
+                  src={requirementsImage}
+                  alt="参赛要求"
+                  className="w-[400px] object-contain bg-[#1a1a1a] rounded-xl"
+                />
+                <a 
+                  href="https://km.sankuan.com/collabpage/2704338587"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="absolute bottom-[52px] left-[80px] text-[#D4FC82] hover:text-[#e5ffa3] transition-colors duration-200 flex items-center gap-1 bg-[#202020] h-[24px] rounded"
+                >
+                  报名链接
+                  <span className="text-base leading-none translate-y-[1px]">→</span>
+                </a>
+              </div>
+              <div className="relative">
+                <div className="relative w-[400px] origin-bottom-left rotate-6 group-hover:rotate-0 transition-transform duration-300">
+                  <img 
+                    src={deliverablesImage}
+                    alt="产出要求"
+                    className="w-full object-contain bg-[#1a1a1a] rounded-xl"
+                  />
+                  <a 
+                    href="https://km.sankuai.com/collabpage/2704898611"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block"
+                    className="absolute bottom-[48px] left-[24px] text-[#D4FC82] hover:text-[#e5ffa3] transition-colors duration-200 flex items-center gap-1 bg-[#202020] h-[24px] rounded"
                   >
-                    <img 
-                      src={`https://nocode.meituan.com/photo/search?keyword=case,example${i+1}&width=400&height=300`}
-                      alt={`Case Example ${i+1}`}
-                      className="w-full object-cover rounded-xl transition-all duration-200 
-                        group-hover:ring-2 group-hover:ring-white
-                        active:brightness-80"
-                    />
+                    参考链接
+                    <span className="text-base leading-none translate-y-[1px]">→</span>
                   </a>
-                ) : (
-                  <img 
-                    src={`https://nocode.meituan.com/photo/search?keyword=case,example${i+1}&width=400&height=300`}
-                    alt={`Case Example ${i+1}`}
-                    className="w-full object-cover rounded-xl transition-all duration-200 
-                      group-hover:ring-2 group-hover:ring-white
-                      active:brightness-80"
-                  />
-                )}
+                </div>
               </div>
-            ))}
+            </div>
           </div>
         </div>
 
-        <div id="schedule">
-          <img 
-            src="https://nocode.meituan.com/photo/search?keyword=competition,schedule&width=1440&height=600" 
-            alt="Competition Schedule"
-            className="w-full object-cover"
-          />
+        {/* 3屏：赛道概览 */}
+        <div id="track-overview" className="relative">
+          <div className="w-full h-[224px] flex items-end justify-center pb-10">
+            <AnimatedTitle text={sections[1].title} />
+          </div>
+          <div className="flex justify-center mb-10">
+            <p className="w-[820px] text-base font-normal text-white text-center">
+              比赛设置开放赛道和命题赛道，选手可选择任选其一或二者均参加，其中开放赛道：以 "为美好生活而设计" 为方向；命题赛道由各中心根据自己的业务诉求出题，共10个命题，具体赛题请看下方清单
+            </p>
+          </div>
+          <div className="flex justify-center">
+            <div className="w-full max-w-[1300px]">
+              <div className="h-[500px] overflow-y-auto pr-4 custom-scrollbar relative">
+                <img 
+                  src={trackDetailsImage}
+                  alt="Track Details"
+                  className="w-full"
+                />
+              </div>
+            </div>
+          </div>
+
+          <style jsx global>{`
+            .custom-scrollbar::-webkit-scrollbar {
+              width: 8px;
+              position: absolute;
+              right: 0;
+              top: 0;
+              bottom: 0;
+              background: transparent;
+            }
+            
+            .custom-scrollbar::-webkit-scrollbar-track {
+              background: transparent;
+            }
+            
+            .custom-scrollbar::-webkit-scrollbar-thumb {
+              background-color: rgba(255, 255, 255, 0);
+              border-radius: 4px;
+              transition: background-color 0.2s;
+              min-height: 40px;
+            }
+            
+            .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+              background-color: rgba(255, 255, 255, 0.1);
+            }
+          `}</style>
         </div>
 
-        <div id="awards">
-          <img 
-            src="https://nocode.meituan.com/photo/search?keyword=awards,prizes&width=1440&height=600" 
-            alt="Awards"
-            className="w-full object-cover"
-          />
+        <div id="case-reference" className="relative">
+          <div className="w-full h-[224px] flex items-end justify-center pb-10">
+            <AnimatedTitle text={sections[2].title} />
+          </div>
+          <div className="flex justify-center">
+            <div className="w-full max-w-[1300px] relative">
+              <div className="absolute -inset-10 bg-[#00ffbb] opacity-30 blur-[80px] z-0 animate-glow-1" />
+              <div className="absolute -inset-10 bg-[#0088ff] opacity-25 blur-[100px] -translate-x-1/2 z-0 animate-glow-2" />
+              <div className="absolute -inset-10 bg-[#00ffea] opacity-25 blur-[100px] translate-x-1/2 z-0 animate-glow-3" />
+              <div className="grid grid-cols-3 gap-6 relative z-10">
+                {[
+                  {
+                    image: caseExample1Image,
+                    url: 'https://km.sankuai.com/collabpage/2677633608',
+                    clickable: true
+                  },
+                  {
+                    image: caseExample2Image,
+                    url: 'https://km.sankuai.com/collabpage/2704573004',
+                    clickable: true
+                  },
+                  {
+                    image: caseExample3Image,
+                    url: 'https://km.sankuai.com/collabpage/2703079719',
+                    clickable: true
+                  },
+                  {
+                    image: caseExample4Image,
+                    clickable: false
+                  },
+                  {
+                    image: caseExample5Image,
+                    clickable: false
+                  },
+                  {
+                    image: caseExample6Image,
+                    clickable: false
+                  }
+                ].map((item, i) => (
+                  <div 
+                    key={i}
+                    className="relative group"
+                  >
+                    {item.clickable ? (
+                      <a
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="block"
+                      >
+                        <img 
+                          src={item.image}
+                          alt={`Case Example ${i+1}`}
+                          className="w-full object-cover rounded-xl transition-all duration-200 
+                            group-hover:ring-2 group-hover:ring-white
+                            active:brightness-80"
+                        />
+                      </a>
+                    ) : (
+                      <img 
+                        src={item.image}
+                        alt={`Case Example ${i+1}`}
+                        className="w-full object-cover rounded-xl transition-all duration-200 
+                          group-hover:ring-2 group-hover:ring-white
+                          active:brightness-80"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div id="help" className="bg-black py-16">
-          <div className="max-w-[1440px] min-w-[1270px] mx-auto px-6">
+        <div id="schedule" className="relative">
+          <div className="w-full h-[224px] flex items-end justify-center pb-10">
+            <AnimatedTitle text={sections[3].title} />
+          </div>
+          <div className="flex justify-center">
+            <div className="w-full max-w-[1440px]">
+              <img 
+                src={scheduleImage}
+                alt="Competition Schedule and Awards"
+                className="w-full"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div id="help" className="relative bg-black py-16">
+          <div className="w-full h-[224px] flex items-end justify-center pb-10">
+            <AnimatedTitle text={sections[4].title} />
+          </div>
+          <div className="w-full max-w-[1440px] mx-auto px-6">
             <div className="grid grid-cols-2 gap-12">
               {/* 左列：常见问题 */}
               <div className="space-y-6">
                 <h3 className="text-2xl font-normal text-white">常见问题</h3>
                 <div className="space-y-3">
-                  {[1, 2, 3].map((i) => (
-                    <img
-                      key={i}
-                      src={`https://nocode.meituan.com/photo/search?keyword=faq,question${i}&width=600&height=200`}
-                      alt={`FAQ Question ${i}`}
-                      className="w-full rounded-xl"
-                    />
-                  ))}
+                  <img
+                    src={faq1Image}
+                    alt="FAQ Question 1"
+                    className="w-full rounded-xl border border-white/20"
+                  />
+                  <img
+                    src={faq2Image}
+                    alt="FAQ Question 2"
+                    className="w-full rounded-xl border border-white/20"
+                  />
+                  <img
+                    src={faq3Image}
+                    alt="FAQ Question 3"
+                    className="w-full rounded-xl border border-white/20"
+                  />
                 </div>
               </div>
 
@@ -321,11 +557,11 @@ const Index = () => {
                   <h3 className="text-2xl font-normal text-white">推荐工具</h3>
                   <div className="grid grid-cols-5 gap-4">
                     {[
-                      { name: 'NoCode', url: 'https://nocode.sankuai.com/' },
-                      { name: 'MCopilot', url: 'https://mcopilot.sankuai.com/' },
-                      { name: 'Cursor', url: 'https://www.cursor.com/cn' },
-                      { name: 'Onlook', url: 'https://onlook.com/' },
-                      { name: 'V0', url: 'https://v0.dev/' }
+                      { name: 'NoCode', url: 'https://nocode.sankuai.com/', image: nocodeToolImage },
+                      { name: 'MCopilot', url: 'https://mcopilot.sankuai.com/', image: mcopilotToolImage },
+                      { name: 'Cursor', url: 'https://www.cursor.com/cn', image: cursorToolImage },
+                      { name: 'Onlook', url: 'https://onlook.com/', image: onlookToolImage },
+                      { name: 'V0', url: 'https://v0.dev/', image: v0ToolImage }
                     ].map((tool, i) => (
                       <div key={i} className="text-center">
                         <a
@@ -335,7 +571,7 @@ const Index = () => {
                           className="block group"
                         >
                           <img
-                            src={`https://nocode.meituan.com/photo/search?keyword=tool,${tool.name.toLowerCase()}&width=200&height=200`}
+                            src={tool.image}
                             alt={tool.name}
                             className="w-full rounded-xl transition-all duration-200 
                               group-hover:ring-2 group-hover:ring-white
@@ -398,13 +634,50 @@ const Index = () => {
       </div>
 
       {/* 页脚 */}
-      <footer className="w-full h-[90px]">
+      <footer className="w-full flex items-center justify-center mt-[100px]">
         <img 
-          src="https://nocode.meituan.com/photo/search?keyword=footer,placeholder,gray&width=1920&height=90" 
+          src={footerImage}
           alt="Footer"
-          className="w-full h-full object-cover"
+          className="w-[1440px] object-contain"
         />
       </footer>
+
+      <style jsx global>{`
+        @keyframes glow1 {
+          0% { transform: translate(0, 0) scale(1); }
+          33% { transform: translate(-20px, 20px) scale(1.1); }
+          66% { transform: translate(20px, -20px) scale(0.9); }
+          100% { transform: translate(0, 0) scale(1); }
+        }
+        
+        @keyframes glow2 {
+          0% { transform: translate(-50%, 0) scale(1); }
+          33% { transform: translate(-60%, 20px) scale(0.9); }
+          66% { transform: translate(-40%, -20px) scale(1.1); }
+          100% { transform: translate(-50%, 0) scale(1); }
+        }
+        
+        @keyframes glow3 {
+          0% { transform: translate(50%, 0) scale(1); }
+          33% { transform: translate(40%, -20px) scale(1.1); }
+          66% { transform: translate(60%, 20px) scale(0.9); }
+          100% { transform: translate(50%, 0) scale(1); }
+        }
+        
+        .animate-glow-1 {
+          animation: glow1 6s ease-in-out infinite;
+        }
+        
+        .animate-glow-2 {
+          animation: glow2 6s ease-in-out infinite;
+          animation-delay: -2s;
+        }
+        
+        .animate-glow-3 {
+          animation: glow3 6s ease-in-out infinite;
+          animation-delay: -4s;
+        }
+      `}</style>
     </div>
   );
 };
