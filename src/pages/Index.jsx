@@ -152,7 +152,7 @@ const AnchorNav = ({ sections }) => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="fixed right-[4px] top-[72px] z-[100] p-4"
+          className="fixed right-[4px] top-[calc(50%-100px)] z-[100] p-4"
         >
           <div className="flex flex-col space-y-4">
             {sections.map((section) => (
@@ -276,11 +276,11 @@ const Index = () => {
                 您的浏览器不支持视频播放。
               </video>
             </div>
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-[122px] z-20 flex flex-col items-center">
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-[112px] z-20 flex flex-col items-center">
               <img 
                 src={posterTopImage}
                 alt="Poster Top"
-                className="h-[198px] mb-5"
+                className="h-[198px] mb-11"
               />
               <a 
                 href="https://km.sankuai.com/collabpage/2704338587" 
