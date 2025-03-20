@@ -101,9 +101,9 @@ const NavBar = () => {
       }}
     >
       <div className="w-full h-full flex items-center justify-between px-6">
-        <span className="text-white text-base font-semibold">{'{ AI Coding _ 美团设计部 }'}</span>
+        <span className="text-white text-base font-semibold font-['JetBrains_Mono']">{'{ AI Coding _ 美团设计部 }'}</span>
         <MusicPlayer />
-          </div>
+      </div>
     </nav>
   );
 };
@@ -152,7 +152,7 @@ const AnchorNav = ({ sections }) => {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
-          className="fixed right-4 top-[72px] z-[100] bg-black bg-opacity-30 backdrop-blur-md rounded-lg p-4"
+          className="fixed right-[4px] top-[72px] z-[100] p-4"
         >
           <div className="flex flex-col space-y-4">
             {sections.map((section) => (
@@ -679,7 +679,7 @@ const Index = () => {
         .shine-text {
           position: relative;
           overflow: hidden;
-          background: linear-gradient(90deg, #3E3E3E 0%, #3E3E3E 40%, #ffffff 50%, #3E3E3E 60%, #3E3E3E 100%);
+          background: linear-gradient(90deg, #3E3E3E 0%, #3E3E3E 40%, #808080 50%, #3E3E3E 60%, #3E3E3E 100%);
           background-size: 200% 100%;
           -webkit-background-clip: text;
           background-clip: text;
