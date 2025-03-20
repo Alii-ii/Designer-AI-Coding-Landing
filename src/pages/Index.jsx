@@ -27,6 +27,7 @@ import cursorToolImage from '@/assets/images/tools/cursor.svg';
 import onlookToolImage from '@/assets/images/tools/onlook.svg';
 import v0ToolImage from '@/assets/images/tools/v0.svg';
 import footerImage from '@/assets/images/footer/footer.svg';
+import posterTopImage from '@/assets/images/poster-top.svg';
 
 // 暂时注释掉不存在的图片引用
 // import faq1Image from '@/assets/images/help/faq1.svg';
@@ -102,7 +103,7 @@ const NavBar = () => {
       <div className="w-full h-full flex items-center justify-between px-6">
         <span className="text-white text-base font-semibold">{'{ AI Coding _ 美团设计部 }'}</span>
         <MusicPlayer />
-      </div>
+          </div>
     </nav>
   );
 };
@@ -230,11 +231,11 @@ const AnimatedTitle = ({ text }) => {
 
 const Index = () => {
   const sections = [
-    { id: 'competition-intro', title: '{ 大赛说明 }' },
-    { id: 'track-overview', title: '{ 赛道概览 }' },
-    { id: 'case-reference', title: '{ 案例参考 }' },
-    { id: 'schedule', title: '{ 赛程&奖项 }' },
-    { id: 'help', title: '{ 比赛帮助 }' }
+    { id: 'competition-intro', title: '大赛说明', displayTitle: '{ 大赛说明 }' },
+    { id: 'track-overview', title: '赛道概览', displayTitle: '{ 赛道概览 }' },
+    { id: 'case-reference', title: '案例参考', displayTitle: '{ 案例参考 }' },
+    { id: 'schedule', title: '赛程&奖项', displayTitle: '{ 赛程&奖项 }' },
+    { id: 'help', title: '比赛帮助', displayTitle: '{ 比赛帮助 }' }
   ];
 
   return (
@@ -262,13 +263,25 @@ const Index = () => {
                 WebkitMaskImage: 'linear-gradient(to right, transparent, black 400px, black calc(100% - 400px), transparent)'
               }}
             >
-              <img 
-                src={posterImage}
-                alt="Competition Poster"
-                className="w-[2560px] h-full object-cover"
-              />
+              <video 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                className="w-full h-full object-contain"
+                onLoadedData={() => console.log('视频加载成功')}
+                onError={(e) => console.error('视频加载错误:', e)}
+              >
+                <source src="/videos/poster.mp4" type="video/mp4" />
+                您的浏览器不支持视频播放。
+              </video>
             </div>
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-[122px] z-20">
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-[122px] z-20 flex flex-col items-center">
+              <img 
+                src={posterTopImage}
+                alt="Poster Top"
+                className="h-[198px] mb-5"
+              />
               <a 
                 href="https://km.sankuai.com/collabpage/2704338587" 
                 target="_blank" 
@@ -286,13 +299,13 @@ const Index = () => {
         <div className="w-[1440px] relative flex flex-col items-center">
           {/* 右侧锚点导航 */}
           <div className="fixed right-4 top-[72px] z-[100]">
-            <AnchorNav sections={sections} />
+        <AnchorNav sections={sections} />
           </div>
 
           {/* 2屏：大赛说明 */}
           <div id="competition-intro" className="relative w-full flex flex-col items-center">
             <div className="w-full h-[224px] flex items-end justify-center pb-10">
-              <AnimatedTitle text={sections[0].title} />
+              <AnimatedTitle text={sections[0].displayTitle} />
             </div>
             {/* 大赛说明内容 */}
             <div className="flex flex-col items-center gap-4 mb-10">
@@ -321,7 +334,7 @@ const Index = () => {
                     className="w-[400px] object-contain bg-[#1a1a1a] rounded-xl"
                   />
                   <a 
-                    href="https://km.sankuan.com/collabpage/2704338587"
+                    href="https://km.sankuai.com/collabpage/2704338587"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="absolute bottom-[52px] left-[80px] text-[#D4FC82] hover:text-[#e5ffa3] transition-colors duration-200 flex items-center gap-1 bg-[#202020] h-[24px] rounded"
@@ -336,26 +349,26 @@ const Index = () => {
                       src={deliverablesImage}
                       alt="产出要求"
                       className="w-full object-contain bg-[#1a1a1a] rounded-xl"
-                    />
-                    <a 
-                      href="https://km.sankuai.com/collabpage/2704898611"
-                      target="_blank"
-                      rel="noopener noreferrer"
+          />
+          <a 
+            href="https://km.sankuai.com/collabpage/2704898611"
+            target="_blank"
+            rel="noopener noreferrer"
                       className="absolute bottom-[48px] left-[24px] text-[#D4FC82] hover:text-[#e5ffa3] transition-colors duration-200 flex items-center gap-1 bg-[#202020] h-[24px] rounded"
-                    >
+          >
                       参考链接
                       <span className="text-base leading-none translate-y-[1px]">→</span>
-                    </a>
+          </a>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+        </div>
 
           {/* 3屏：赛道概览 */}
           <div id="track-overview" className="relative w-full flex flex-col items-center">
             <div className="w-full h-[224px] flex items-end justify-center pb-10">
-              <AnimatedTitle text={sections[1].title} />
+              <AnimatedTitle text={sections[1].displayTitle} />
             </div>
             <div className="flex justify-center mb-10 w-full">
               <p className="w-[820px] text-base font-normal text-white text-center">
@@ -367,11 +380,11 @@ const Index = () => {
                 <div className="h-[500px] overflow-y-auto pr-4 custom-scrollbar relative">
                   <img 
                     src={trackDetailsImage}
-                    alt="Track Details"
+              alt="Track Details"
                     className="w-full"
-                  />
-                </div>
-              </div>
+            />
+          </div>
+        </div>
             </div>
 
             <style>{`
@@ -404,7 +417,7 @@ const Index = () => {
           {/* 4屏：案例参考 */}
           <div id="case-reference" className="relative w-full flex flex-col items-center">
             <div className="w-full h-[224px] flex items-end justify-center pb-10">
-              <AnimatedTitle text={sections[2].title} />
+              <AnimatedTitle text={sections[2].displayTitle} />
             </div>
             <div className="flex justify-center w-full">
               <div className="w-[1300px] relative">
@@ -463,23 +476,23 @@ const Index = () => {
                       ) : (
                         <img 
                           src={item.image}
-                          alt={`Case Example ${i+1}`}
+                alt={`Case Example ${i+1}`}
                           className="w-full object-cover rounded-xl transition-all duration-200 
                             group-hover:ring-2 group-hover:ring-white
                             active:brightness-80"
-                        />
+              />
                       )}
                     </div>
-                  ))}
+            ))}
                 </div>
               </div>
-            </div>
           </div>
+        </div>
 
           {/* 5屏：赛程&奖项 */}
           <div id="schedule" className="relative w-full flex flex-col items-center">
             <div className="w-full h-[224px] flex items-end justify-center pb-10">
-              <AnimatedTitle text={sections[3].title} />
+              <AnimatedTitle text={sections[3].displayTitle} />
             </div>
             <div className="flex justify-center w-full">
               <div className="w-[1440px]">
@@ -490,14 +503,14 @@ const Index = () => {
                 />
               </div>
             </div>
-          </div>
+        </div>
 
           {/* 6屏：比赛帮助 */}
           <div id="help" className="relative w-full bg-black py-16 flex flex-col items-center">
             <div className="w-full h-[224px] flex items-end justify-center pb-10">
-              <AnimatedTitle text={sections[4].title} />
+              <AnimatedTitle text={sections[4].displayTitle} />
             </div>
-            <div className="w-[1440px] px-6">
+            <div className="w-[1300px] px-6 mt-5">
               <div className="grid grid-cols-2 gap-12">
                 {/* 左列：常见问题 */}
                 <div className="space-y-6">
@@ -506,17 +519,17 @@ const Index = () => {
                     <img
                       src={faq1Image}
                       alt="FAQ Question 1"
-                      className="w-full rounded-xl border border-white/20"
+                      className="w-full rounded-[20px] border border-white/20"
                     />
                     <img
                       src={faq2Image}
                       alt="FAQ Question 2"
-                      className="w-full rounded-xl border border-white/20"
+                      className="w-full rounded-[20px] border border-white/20"
                     />
                     <img
                       src={faq3Image}
                       alt="FAQ Question 3"
-                      className="w-full rounded-xl border border-white/20"
+                      className="w-full rounded-[20px] border border-white/20"
                     />
                   </div>
                 </div>
@@ -544,7 +557,7 @@ const Index = () => {
                             <img
                               src={tool.image}
                               alt={tool.name}
-                              className="w-full rounded-xl transition-all duration-200 
+                              className="w-full rounded-[20px] transition-all duration-200 
                                 group-hover:ring-2 group-hover:ring-white
                                 active:brightness-80"
                             />
@@ -578,7 +591,7 @@ const Index = () => {
                           href={doc.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center gap-2 text-blue-500 hover:text-blue-400"
+                          className="flex items-center gap-2 text-[#D4FC82] hover:text-[#e5ffa3] transition-colors duration-200"
                         >
                           <svg
                             className="w-4 h-4"
@@ -606,7 +619,15 @@ const Index = () => {
       </div>
 
       {/* 页脚 */}
-      <footer className="w-full flex items-center justify-center mt-[100px] overflow-x-hidden overflow-y-hidden">
+      <footer className="w-full flex flex-col items-center justify-center mt-[100px] overflow-x-hidden overflow-y-hidden">
+        <div className="text-center mb-8">
+          <div className="text-[60px] leading-[80px] tracking-[0.1em] text-[#3E3E3E] font-['JetBrains_Mono_NL'] font-normal shine-text">
+            Design for a better life
+          </div>
+          <div className="text-[60px] leading-[80px] tracking-[0.1em] text-[#3E3E3E] font-['JetBrains_Mono_NL'] font-normal shine-text">
+            with ai coding
+          </div>
+        </div>
         <img 
           src={footerImage}
           alt="Footer"
@@ -615,6 +636,8 @@ const Index = () => {
       </footer>
 
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+        
         html, body {
           overscroll-behavior: none;
         }
@@ -651,6 +674,28 @@ const Index = () => {
         .animate-glow-3 {
           animation: glow3 6s ease-in-out infinite;
           animation-delay: -4s;
+        }
+
+        .shine-text {
+          position: relative;
+          overflow: hidden;
+          background: linear-gradient(90deg, #3E3E3E 0%, #3E3E3E 40%, #ffffff 50%, #3E3E3E 60%, #3E3E3E 100%);
+          background-size: 200% 100%;
+          -webkit-background-clip: text;
+          background-clip: text;
+          color: transparent;
+          animation: shine 5s linear infinite;
+          font-family: 'JetBrains Mono', monospace;
+          letter-spacing: 0.1em;
+        }
+
+        @keyframes shine {
+          0% {
+            background-position: 200% 0;
+          }
+          100% {
+            background-position: -200% 0;
+          }
         }
       `}</style>
     </div>
