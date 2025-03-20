@@ -5,7 +5,7 @@ import { Fragment } from 'react';
 import { Tooltip } from "@/components/ui/tooltip";
 import { TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { motion, AnimatePresence } from 'framer-motion';
-import { Music2, Pause } from 'lucide-react';
+import { Music2, Pause, VolumeX } from 'lucide-react';
 import posterImage from '@/assets/images/poster.svg';
 import highlightsImage from '@/assets/images/intro/highlights.svg';
 import requirementsImage from '@/assets/images/intro/requirements.svg';
@@ -61,12 +61,17 @@ const MusicPlayer = () => {
         )}
         <button
           onClick={togglePlay}
-          className="relative w-[28px] h-[28px] rounded-full border-[1.5px] border-white/30 flex items-center justify-center transition-all duration-300 cursor-pointer bg-white/5 hover:bg-white/10"
+          className={`relative w-[28px] h-[28px] rounded-full border-[1.5px] border-white/30 flex items-center justify-center transition-all duration-300 cursor-pointer bg-white/5 hover:bg-white/10 ${isPlaying ? 'animate-spin-slow' : ''}`}
         >
           {isPlaying ? (
-            <Pause className="w-4 h-4 text-white" />
-          ) : (
             <Music2 className="w-4 h-4 text-white" />
+          ) : (
+            <div className="relative">
+              <Music2 className="w-4 h-4 text-white" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="w-[18px] h-[1.5px] bg-white rotate-45 transform origin-center" />
+              </div>
+            </div>
           )}
         </button>
       </div>
@@ -80,28 +85,9 @@ const MusicPlayer = () => {
 };
 
 const NavBar = () => {
-  const [scrollProgress, setScrollProgress] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const halfViewport = window.innerHeight / 2;
-      const progress = Math.min(window.scrollY / halfViewport, 1);
-      setScrollProgress(progress);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
-    <nav className={`fixed top-0 left-0 right-0 h-14 z-50 w-full transition-all duration-300`}
-      style={{
-        backgroundColor: `rgba(0, 0, 0, ${scrollProgress * 0.75})`,
-        backdropFilter: `blur(${scrollProgress * 8}px)`
-      }}
-    >
-      <div className="w-full h-full flex items-center justify-between px-6">
-        <span className="text-white text-base font-semibold font-['JetBrains_Mono']">{'{ AI Coding _ 美团设计部 }'}</span>
+    <nav className="fixed top-0 left-0 right-0 h-14 z-50 w-full">
+      <div className="w-full h-full flex items-center justify-end px-6">
         <MusicPlayer />
       </div>
     </nav>
@@ -641,6 +627,20 @@ const Index = () => {
         html, body {
           overscroll-behavior: none;
         }
+
+        @keyframes spin-slow {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+
+        .animate-spin-slow {
+          animation: spin-slow 3s linear infinite;
+        }
+
         @keyframes glow1 {
           0% { transform: translate(0, 0) scale(1); }
           33% { transform: translate(-20px, 20px) scale(1.1); }
