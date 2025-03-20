@@ -35,42 +35,17 @@ import footerImage from '@/assets/images/footer/footer.svg';
 
 const MusicPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [error, setError] = useState(null);
   const audioRef = useRef(null);
 
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = 0.5;
-    }
-  }, []);
-
   const togglePlay = () => {
-    if (!isLoaded) return;
+    if (!audioRef.current) return;
     
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      const playPromise = audioRef.current.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(error => {
-          console.error("播放出错:", error);
-          setError(error);
-        });
-      }
+      audioRef.current.play();
     }
     setIsPlaying(!isPlaying);
-  };
-
-  const handleCanPlayThrough = () => {
-    setIsLoaded(true);
-    setError(null);
-  };
-
-  const handleError = (e) => {
-    console.error("音频加载出错:", e);
-    setError(e);
-    setIsLoaded(false);
   };
 
   return (
@@ -85,12 +60,7 @@ const MusicPlayer = () => {
         )}
         <button
           onClick={togglePlay}
-          disabled={!isLoaded}
-          className={`relative w-[28px] h-[28px] rounded-full border-[1.5px] border-white/30 flex items-center justify-center transition-all duration-300 ${
-            isLoaded 
-              ? `bg-white/5 hover:bg-white/10 ${isPlaying ? 'scale-110' : 'scale-100'}` 
-              : 'bg-white/5 opacity-50 cursor-not-allowed'
-          }`}
+          className="relative w-[28px] h-[28px] rounded-full border-[1.5px] border-white/30 flex items-center justify-center transition-all duration-300 cursor-pointer bg-white/5 hover:bg-white/10"
         >
           {isPlaying ? (
             <Pause className="w-4 h-4 text-white" />
@@ -101,9 +71,7 @@ const MusicPlayer = () => {
       </div>
       <audio
         ref={audioRef}
-        src="/music/background -music.mp3"
-        onCanPlayThrough={handleCanPlayThrough}
-        onError={handleError}
+        src="/music/background-music.mp3"
         loop
       />
     </div>
@@ -270,11 +238,11 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-black overflow-x-hidden overflow-y-hidden">
       <NavBar />
       
       {/* 首屏 */}
-      <div className="relative w-full h-screen overflow-hidden">
+      <div className="relative w-full h-[1000px] overflow-hidden">
         {/* 背景部分 */}
         <div className="absolute inset-0 w-full h-full">
           <img 
@@ -287,8 +255,8 @@ const Index = () => {
         
         {/* 海报主体部分 */}
         <div className="relative h-full">
-          <div className="absolute inset-0 flex flex-col items-center justify-center">
-            <div className="relative w-[2560px] h-screen overflow-hidden"
+          <div className="absolute inset-0 flex flex-col items-center">
+            <div className="relative w-[2560px] h-[1000px] overflow-hidden"
               style={{
                 maskImage: 'linear-gradient(to right, transparent, black 400px, black calc(100% - 400px), transparent)',
                 WebkitMaskImage: 'linear-gradient(to right, transparent, black 400px, black calc(100% - 400px), transparent)'
@@ -300,7 +268,7 @@ const Index = () => {
                 className="w-[2560px] h-full object-cover"
               />
             </div>
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-[142px] z-20">
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-[122px] z-20">
               <a 
                 href="https://km.sankuai.com/collabpage/2704338587" 
                 target="_blank" 
@@ -314,175 +282,185 @@ const Index = () => {
         </div>
       </div>
 
-      <div id="competition-details" className="w-full max-w-[1440px] mx-auto relative">
-
-        {/* 右侧锚点导航 */}
-        <div className="fixed right-4 top-[72px] z-[100]">
-          <AnchorNav sections={sections} />
-        </div>
-
-        {/* 2屏：大赛说明 */}
-        <div id="competition-intro" className="relative">
-          <div className="w-full h-[224px] flex items-end justify-center pb-10">
-            <AnimatedTitle text={sections[0].title} />
-          </div>
-          {/* 大赛说明内容 */}
-          <div className="flex flex-col items-center gap-4 mb-10">
-            <p className="w-[820px] text-base font-normal text-white text-center">
-              设计师们，在日常工作中，你是否常常被创意落地难而困扰？好不容易构思出极具想象力的设计方案，却因代码实现的复杂而举步维艾。但现在，AI Coding 能为你化解这些痛点！
-            </p>
-            <p className="w-[820px] text-base font-normal text-white text-center">
-              本次 AI Coding 设计活动由基础研发设计中心发起，面向设计部全体设计师，快来尽情发挥你的创意吧！
-            </p>
+      <div id="competition-details" className="w-full flex justify-center overflow-x-hidden overflow-y-hidden">
+        <div className="w-[1440px] relative flex flex-col items-center">
+          {/* 右侧锚点导航 */}
+          <div className="fixed right-4 top-[72px] z-[100]">
+            <AnchorNav sections={sections} />
           </div>
 
-          {/* 3卡片*/}
-          <div className="flex justify-center">
-            <div className="grid grid-cols-3 gap-6 group">
-              <div className="relative w-[400px]">
-                <img 
-                  src={highlightsImage}
-                  alt="活动亮点"
-                  className="w-full object-contain bg-[#1a1a1a] rounded-xl origin-bottom-right -rotate-6 group-hover:rotate-0 transition-transform duration-300"
-                />
-              </div>
-              <div className="relative">
-                <img 
-                  src={requirementsImage}
-                  alt="参赛要求"
-                  className="w-[400px] object-contain bg-[#1a1a1a] rounded-xl"
-                />
-                <a 
-                  href="https://km.sankuan.com/collabpage/2704338587"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute bottom-[52px] left-[80px] text-[#D4FC82] hover:text-[#e5ffa3] transition-colors duration-200 flex items-center gap-1 bg-[#202020] h-[24px] rounded"
-                >
-                  报名链接
-                  <span className="text-base leading-none translate-y-[1px]">→</span>
-                </a>
-              </div>
-              <div className="relative">
-                <div className="relative w-[400px] origin-bottom-left rotate-6 group-hover:rotate-0 transition-transform duration-300">
+          {/* 2屏：大赛说明 */}
+          <div id="competition-intro" className="relative w-full flex flex-col items-center">
+            <div className="w-full h-[224px] flex items-end justify-center pb-10">
+              <AnimatedTitle text={sections[0].title} />
+            </div>
+            {/* 大赛说明内容 */}
+            <div className="flex flex-col items-center gap-4 mb-10">
+              <p className="w-[820px] text-base font-normal text-white text-center">
+                设计师们，在日常工作中，你是否常常被创意落地难而困扰？好不容易构思出极具想象力的设计方案，却因代码实现的复杂而举步维艾。但现在，AI Coding 能为你化解这些痛点！
+              </p>
+              <p className="w-[820px] text-base font-normal text-white text-center">
+                本次 AI Coding 设计活动由基础研发设计中心发起，面向设计部全体设计师，快来尽情发挥你的创意吧！
+              </p>
+            </div>
+
+            {/* 3卡片*/}
+            <div className="flex justify-center w-full">
+              <div className="grid grid-cols-3 gap-6 group">
+                <div className="relative w-[400px]">
                   <img 
-                    src={deliverablesImage}
-                    alt="产出要求"
-                    className="w-full object-contain bg-[#1a1a1a] rounded-xl"
+                    src={highlightsImage}
+                    alt="活动亮点"
+                    className="w-full object-contain bg-[#1a1a1a] rounded-xl origin-bottom-right -rotate-6 group-hover:rotate-0 transition-transform duration-300"
+                  />
+                </div>
+                <div className="relative">
+                  <img 
+                    src={requirementsImage}
+                    alt="参赛要求"
+                    className="w-[400px] object-contain bg-[#1a1a1a] rounded-xl"
                   />
                   <a 
-                    href="https://km.sankuai.com/collabpage/2704898611"
+                    href="https://km.sankuan.com/collabpage/2704338587"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="absolute bottom-[48px] left-[24px] text-[#D4FC82] hover:text-[#e5ffa3] transition-colors duration-200 flex items-center gap-1 bg-[#202020] h-[24px] rounded"
+                    className="absolute bottom-[52px] left-[80px] text-[#D4FC82] hover:text-[#e5ffa3] transition-colors duration-200 flex items-center gap-1 bg-[#202020] h-[24px] rounded"
                   >
-                    参考链接
+                    报名链接
                     <span className="text-base leading-none translate-y-[1px]">→</span>
                   </a>
+                </div>
+                <div className="relative">
+                  <div className="relative w-[400px] origin-bottom-left rotate-6 group-hover:rotate-0 transition-transform duration-300">
+                    <img 
+                      src={deliverablesImage}
+                      alt="产出要求"
+                      className="w-full object-contain bg-[#1a1a1a] rounded-xl"
+                    />
+                    <a 
+                      href="https://km.sankuai.com/collabpage/2704898611"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="absolute bottom-[48px] left-[24px] text-[#D4FC82] hover:text-[#e5ffa3] transition-colors duration-200 flex items-center gap-1 bg-[#202020] h-[24px] rounded"
+                    >
+                      参考链接
+                      <span className="text-base leading-none translate-y-[1px]">→</span>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* 3屏：赛道概览 */}
-        <div id="track-overview" className="relative">
-          <div className="w-full h-[224px] flex items-end justify-center pb-10">
-            <AnimatedTitle text={sections[1].title} />
-          </div>
-          <div className="flex justify-center mb-10">
-            <p className="w-[820px] text-base font-normal text-white text-center">
-              比赛设置开放赛道和命题赛道，选手可选择任选其一或二者均参加，其中开放赛道：以 "为美好生活而设计" 为方向；命题赛道由各中心根据自己的业务诉求出题，共10个命题，具体赛题请看下方清单
-            </p>
-          </div>
-          <div className="flex justify-center">
-            <div className="w-full max-w-[1300px]">
-              <div className="h-[500px] overflow-y-auto pr-4 custom-scrollbar relative">
-                <img 
-                  src={trackDetailsImage}
-                  alt="Track Details"
-                  className="w-full"
-                />
+          {/* 3屏：赛道概览 */}
+          <div id="track-overview" className="relative w-full flex flex-col items-center">
+            <div className="w-full h-[224px] flex items-end justify-center pb-10">
+              <AnimatedTitle text={sections[1].title} />
+            </div>
+            <div className="flex justify-center mb-10 w-full">
+              <p className="w-[820px] text-base font-normal text-white text-center">
+                比赛设置开放赛道和命题赛道，选手可选择任选其一或二者均参加，其中开放赛道：以 "为美好生活而设计" 为方向；命题赛道由各中心根据自己的业务诉求出题，共10个命题，具体赛题请看下方清单
+              </p>
+            </div>
+            <div className="flex justify-center w-full">
+              <div className="w-[1300px]">
+                <div className="h-[500px] overflow-y-auto pr-4 custom-scrollbar relative">
+                  <img 
+                    src={trackDetailsImage}
+                    alt="Track Details"
+                    className="w-full"
+                  />
+                </div>
               </div>
             </div>
+
+            <style>{`
+              .custom-scrollbar::-webkit-scrollbar {
+                width: 8px;
+                position: absolute;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                background: transparent;
+              }
+              
+              .custom-scrollbar::-webkit-scrollbar-track {
+                background: transparent;
+              }
+              
+              .custom-scrollbar::-webkit-scrollbar-thumb {
+                background-color: rgba(255, 255, 255, 0);
+                border-radius: 4px;
+                transition: background-color 0.2s;
+                min-height: 40px;
+              }
+              
+              .custom-scrollbar:hover::-webkit-scrollbar-thumb {
+                background-color: rgba(255, 255, 255, 0.1);
+              }
+            `}</style>
           </div>
 
-          <style jsx global>{`
-            .custom-scrollbar::-webkit-scrollbar {
-              width: 8px;
-              position: absolute;
-              right: 0;
-              top: 0;
-              bottom: 0;
-              background: transparent;
-            }
-            
-            .custom-scrollbar::-webkit-scrollbar-track {
-              background: transparent;
-            }
-            
-            .custom-scrollbar::-webkit-scrollbar-thumb {
-              background-color: rgba(255, 255, 255, 0);
-              border-radius: 4px;
-              transition: background-color 0.2s;
-              min-height: 40px;
-            }
-            
-            .custom-scrollbar:hover::-webkit-scrollbar-thumb {
-              background-color: rgba(255, 255, 255, 0.1);
-            }
-          `}</style>
-        </div>
-
-        <div id="case-reference" className="relative">
-          <div className="w-full h-[224px] flex items-end justify-center pb-10">
-            <AnimatedTitle text={sections[2].title} />
-          </div>
-          <div className="flex justify-center">
-            <div className="w-full max-w-[1300px] relative">
-              <div className="absolute -inset-10 bg-[#00ffbb] opacity-30 blur-[80px] z-0 animate-glow-1" />
-              <div className="absolute -inset-10 bg-[#0088ff] opacity-25 blur-[100px] -translate-x-1/2 z-0 animate-glow-2" />
-              <div className="absolute -inset-10 bg-[#00ffea] opacity-25 blur-[100px] translate-x-1/2 z-0 animate-glow-3" />
-              <div className="grid grid-cols-3 gap-6 relative z-10">
-                {[
-                  {
-                    image: caseExample1Image,
-                    url: 'https://km.sankuai.com/collabpage/2677633608',
-                    clickable: true
-                  },
-                  {
-                    image: caseExample2Image,
-                    url: 'https://km.sankuai.com/collabpage/2704573004',
-                    clickable: true
-                  },
-                  {
-                    image: caseExample3Image,
-                    url: 'https://km.sankuai.com/collabpage/2703079719',
-                    clickable: true
-                  },
-                  {
-                    image: caseExample4Image,
-                    clickable: false
-                  },
-                  {
-                    image: caseExample5Image,
-                    clickable: false
-                  },
-                  {
-                    image: caseExample6Image,
-                    clickable: false
-                  }
-                ].map((item, i) => (
-                  <div 
-                    key={i}
-                    className="relative group"
-                  >
-                    {item.clickable ? (
-                      <a
-                        href={item.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block"
-                      >
+          {/* 4屏：案例参考 */}
+          <div id="case-reference" className="relative w-full flex flex-col items-center">
+            <div className="w-full h-[224px] flex items-end justify-center pb-10">
+              <AnimatedTitle text={sections[2].title} />
+            </div>
+            <div className="flex justify-center w-full">
+              <div className="w-[1300px] relative">
+                <div className="absolute -inset-10 bg-[#00ffbb] opacity-30 blur-[80px] z-0 animate-glow-1" />
+                <div className="absolute -inset-10 bg-[#0088ff] opacity-25 blur-[100px] -translate-x-1/2 z-0 animate-glow-2" />
+                <div className="absolute -inset-10 bg-[#00ffea] opacity-25 blur-[100px] translate-x-1/2 z-0 animate-glow-3" />
+                <div className="grid grid-cols-3 gap-6 relative z-10">
+                  {[
+                    {
+                      image: caseExample1Image,
+                      url: 'https://km.sankuai.com/collabpage/2677633608',
+                      clickable: true
+                    },
+                    {
+                      image: caseExample2Image,
+                      url: 'https://km.sankuai.com/collabpage/2704573004',
+                      clickable: true
+                    },
+                    {
+                      image: caseExample3Image,
+                      url: 'https://km.sankuai.com/collabpage/2703079719',
+                      clickable: true
+                    },
+                    {
+                      image: caseExample4Image,
+                      clickable: false
+                    },
+                    {
+                      image: caseExample5Image,
+                      clickable: false
+                    },
+                    {
+                      image: caseExample6Image,
+                      clickable: false
+                    }
+                  ].map((item, i) => (
+                    <div 
+                      key={i}
+                      className="relative group"
+                    >
+                      {item.clickable ? (
+                        <a
+                          href={item.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block"
+                        >
+                          <img 
+                            src={item.image}
+                            alt={`Case Example ${i+1}`}
+                            className="w-full object-cover rounded-xl transition-all duration-200 
+                              group-hover:ring-2 group-hover:ring-white
+                              active:brightness-80"
+                          />
+                        </a>
+                      ) : (
                         <img 
                           src={item.image}
                           alt={`Case Example ${i+1}`}
@@ -490,141 +468,135 @@ const Index = () => {
                             group-hover:ring-2 group-hover:ring-white
                             active:brightness-80"
                         />
-                      </a>
-                    ) : (
-                      <img 
-                        src={item.image}
-                        alt={`Case Example ${i+1}`}
-                        className="w-full object-cover rounded-xl transition-all duration-200 
-                          group-hover:ring-2 group-hover:ring-white
-                          active:brightness-80"
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div id="schedule" className="relative">
-          <div className="w-full h-[224px] flex items-end justify-center pb-10">
-            <AnimatedTitle text={sections[3].title} />
-          </div>
-          <div className="flex justify-center">
-            <div className="w-full max-w-[1440px]">
-              <img 
-                src={scheduleImage}
-                alt="Competition Schedule and Awards"
-                className="w-full"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div id="help" className="relative bg-black py-16">
-          <div className="w-full h-[224px] flex items-end justify-center pb-10">
-            <AnimatedTitle text={sections[4].title} />
-          </div>
-          <div className="w-full max-w-[1440px] mx-auto px-6">
-            <div className="grid grid-cols-2 gap-12">
-              {/* 左列：常见问题 */}
-              <div className="space-y-6">
-                <h3 className="text-2xl font-normal text-white">常见问题</h3>
-                <div className="space-y-3">
-                  <img
-                    src={faq1Image}
-                    alt="FAQ Question 1"
-                    className="w-full rounded-xl border border-white/20"
-                  />
-                  <img
-                    src={faq2Image}
-                    alt="FAQ Question 2"
-                    className="w-full rounded-xl border border-white/20"
-                  />
-                  <img
-                    src={faq3Image}
-                    alt="FAQ Question 3"
-                    className="w-full rounded-xl border border-white/20"
-                  />
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
+            </div>
+          </div>
 
-              {/* 右列：推荐工具和技术加油站 */}
-              <div className="space-y-12">
-                {/* 推荐工具 */}
+          {/* 5屏：赛程&奖项 */}
+          <div id="schedule" className="relative w-full flex flex-col items-center">
+            <div className="w-full h-[224px] flex items-end justify-center pb-10">
+              <AnimatedTitle text={sections[3].title} />
+            </div>
+            <div className="flex justify-center w-full">
+              <div className="w-[1440px]">
+                <img 
+                  src={scheduleImage}
+                  alt="Competition Schedule and Awards"
+                  className="w-full"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* 6屏：比赛帮助 */}
+          <div id="help" className="relative w-full bg-black py-16 flex flex-col items-center">
+            <div className="w-full h-[224px] flex items-end justify-center pb-10">
+              <AnimatedTitle text={sections[4].title} />
+            </div>
+            <div className="w-[1440px] px-6">
+              <div className="grid grid-cols-2 gap-12">
+                {/* 左列：常见问题 */}
                 <div className="space-y-6">
-                  <h3 className="text-2xl font-normal text-white">推荐工具</h3>
-                  <div className="grid grid-cols-5 gap-4">
-                    {[
-                      { name: 'NoCode', url: 'https://nocode.sankuai.com/', image: nocodeToolImage },
-                      { name: 'MCopilot', url: 'https://mcopilot.sankuai.com/', image: mcopilotToolImage },
-                      { name: 'Cursor', url: 'https://www.cursor.com/cn', image: cursorToolImage },
-                      { name: 'Onlook', url: 'https://onlook.com/', image: onlookToolImage },
-                      { name: 'V0', url: 'https://v0.dev/', image: v0ToolImage }
-                    ].map((tool, i) => (
-                      <div key={i} className="text-center">
+                  <h3 className="text-2xl font-normal text-white">常见问题</h3>
+                  <div className="space-y-3">
+                    <img
+                      src={faq1Image}
+                      alt="FAQ Question 1"
+                      className="w-full rounded-xl border border-white/20"
+                    />
+                    <img
+                      src={faq2Image}
+                      alt="FAQ Question 2"
+                      className="w-full rounded-xl border border-white/20"
+                    />
+                    <img
+                      src={faq3Image}
+                      alt="FAQ Question 3"
+                      className="w-full rounded-xl border border-white/20"
+                    />
+                  </div>
+                </div>
+
+                {/* 右列：推荐工具和技术加油站 */}
+                <div className="space-y-12">
+                  {/* 推荐工具 */}
+                  <div className="space-y-6">
+                    <h3 className="text-2xl font-normal text-white">推荐工具</h3>
+                    <div className="grid grid-cols-5 gap-4">
+                      {[
+                        { name: 'NoCode', url: 'https://nocode.sankuai.com/', image: nocodeToolImage },
+                        { name: 'MCopilot', url: 'https://mcopilot.sankuai.com/', image: mcopilotToolImage },
+                        { name: 'Cursor', url: 'https://www.cursor.com/cn', image: cursorToolImage },
+                        { name: 'Onlook', url: 'https://onlook.com/', image: onlookToolImage },
+                        { name: 'V0', url: 'https://v0.dev/', image: v0ToolImage }
+                      ].map((tool, i) => (
+                        <div key={i} className="text-center">
+                          <a
+                            href={tool.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block group"
+                          >
+                            <img
+                              src={tool.image}
+                              alt={tool.name}
+                              className="w-full rounded-xl transition-all duration-200 
+                                group-hover:ring-2 group-hover:ring-white
+                                active:brightness-80"
+                            />
+                            <span className="block mt-3 text-white">{tool.name}</span>
+                          </a>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* 技术加油站 */}
+                  <div className="space-y-6">
+                    <h3 className="text-2xl font-normal text-white">技术加油站</h3>
+                    <div className="space-y-4">
+                      {[
+                        {
+                          text: 'NoCode使用手册',
+                          url: 'https://km.sankuai.com/collabpage/2702228870'
+                        },
+                        {
+                          text: 'NoCde实践案例与使用技巧',
+                          url: 'https://km.sankuai.com/collabpage/2702637865'
+                        },
+                        {
+                          text: 'AI产品设计工具',
+                          url: 'https://km.sankuai.com/collabpage/2703705501?quote-id=2703705501--165cb1ee-f012-43d2-94c5-1b7e7e970606&discussion-id=1892876219356745736&comment-id=1892876219369250829'
+                        }
+                      ].map((doc, i) => (
                         <a
-                          href={tool.url}
+                          key={i}
+                          href={doc.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="block group"
+                          className="flex items-center gap-2 text-blue-500 hover:text-blue-400"
                         >
-                          <img
-                            src={tool.image}
-                            alt={tool.name}
-                            className="w-full rounded-xl transition-all duration-200 
-                              group-hover:ring-2 group-hover:ring-white
-                              active:brightness-80"
-                          />
-                          <span className="block mt-3 text-white">{tool.name}</span>
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                            />
+                          </svg>
+                          <span className="text-base font-medium">{doc.text}</span>
                         </a>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 技术加油站 */}
-                <div className="space-y-6">
-                  <h3 className="text-2xl font-normal text-white">技术加油站</h3>
-                  <div className="space-y-4">
-                    {[
-                      {
-                        text: 'NoCode使用手册',
-                        url: 'https://km.sankuai.com/collabpage/2702228870'
-                      },
-                      {
-                        text: 'NoCde实践案例与使用技巧',
-                        url: 'https://km.sankuai.com/collabpage/2702637865'
-                      },
-                      {
-                        text: 'AI产品设计工具',
-                        url: 'https://km.sankuai.com/collabpage/2703705501?quote-id=2703705501--165cb1ee-f012-43d2-94c5-1b7e7e970606&discussion-id=1892876219356745736&comment-id=1892876219369250829'
-                      }
-                    ].map((doc, i) => (
-                      <a
-                        key={i}
-                        href={doc.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2 text-blue-500 hover:text-blue-400"
-                      >
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                          />
-                        </svg>
-                        <span className="text-base font-medium">{doc.text}</span>
-                      </a>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -634,7 +606,7 @@ const Index = () => {
       </div>
 
       {/* 页脚 */}
-      <footer className="w-full flex items-center justify-center mt-[100px]">
+      <footer className="w-full flex items-center justify-center mt-[100px] overflow-x-hidden overflow-y-hidden">
         <img 
           src={footerImage}
           alt="Footer"
@@ -642,7 +614,10 @@ const Index = () => {
         />
       </footer>
 
-      <style jsx global>{`
+      <style>{`
+        html, body {
+          overscroll-behavior: none;
+        }
         @keyframes glow1 {
           0% { transform: translate(0, 0) scale(1); }
           33% { transform: translate(-20px, 20px) scale(1.1); }
