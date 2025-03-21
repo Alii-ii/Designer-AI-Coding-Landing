@@ -271,16 +271,16 @@ const Index = () => {
                 alt="Poster Top"
                 className="h-[198px] mb-11"
               />
-              <button
+              <a
+                href="#"
                 onClick={(e) => {
                   e.preventDefault();
                   setIsRegisterDialogOpen(true);
                 }}
-                className="absolute bottom-[52px] left-[80px] text-[#D4FC82] hover:text-[#e5ffa3] transition-colors duration-200 flex items-center gap-1 bg-[#202020] h-[24px] rounded"
+                className="inline-block h-[60px] px-8 rounded-full bg-black/30 backdrop-blur-md border-2 border-[#D4FC82] text-[#D4FC82] text-[20px] flex items-center justify-center transition-all duration-100 hover:bg-[#D4FC82]/15 hover:font-medium whitespace-nowrap"
               >
                 立即报名
-                <span className="text-base leading-none translate-y-[1px]">→</span>
-              </button>
+              </a>
             </div>
           </div>
         </div>
@@ -324,7 +324,8 @@ const Index = () => {
                     alt="参赛要求"
                     className="w-[400px] object-contain bg-[#1a1a1a] rounded-xl"
                   />
-                  <button 
+                  <a 
+                    href="#"
                     onClick={(e) => {
                       e.preventDefault();
                       setIsRegisterDialogOpen(true);
@@ -333,7 +334,7 @@ const Index = () => {
                   >
                     立即报名
                     <span className="text-base leading-none translate-y-[1px]">→</span>
-                  </button>
+                  </a>
                 </div>
                 <div className="relative">
                   <div className="relative w-[400px] origin-bottom-left rotate-6 group-hover:rotate-0 transition-transform duration-300">
