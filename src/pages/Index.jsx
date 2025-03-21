@@ -28,6 +28,7 @@ import onlookToolImage from '@/assets/images/tools/onlook.svg';
 import v0ToolImage from '@/assets/images/tools/v0.svg';
 import footerImage from '@/assets/images/footer/footer.svg';
 import posterTopImage from '@/assets/images/poster-top.svg';
+import { RegisterDialog } from "@/components/RegisterDialog";
 
 // 暂时注释掉不存在的图片引用
 // import faq1Image from '@/assets/images/help/faq1.svg';
@@ -224,6 +225,8 @@ const Index = () => {
     { id: 'help', title: '比赛帮助', displayTitle: '{ 比赛帮助 }' }
   ];
 
+  const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-black overflow-x-hidden overflow-y-hidden">
       <NavBar />
@@ -268,14 +271,16 @@ const Index = () => {
                 alt="Poster Top"
                 className="h-[198px] mb-11"
               />
-              <a 
-                href="https://km.sankuai.com/collabpage/2704338587" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-block h-[60px] px-8 rounded-full bg-black/30 backdrop-blur-md border-2 border-[#D4FC82] text-[#D4FC82] text-[20px] flex items-center justify-center transition-all duration-100 hover:border-[3px] hover:font-medium whitespace-nowrap"
+              <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsRegisterDialogOpen(true);
+                }}
+                className="absolute bottom-[52px] left-[80px] text-[#D4FC82] hover:text-[#e5ffa3] transition-colors duration-200 flex items-center gap-1 bg-[#202020] h-[24px] rounded"
               >
                 立即报名
-              </a>
+                <span className="text-base leading-none translate-y-[1px]">→</span>
+              </button>
             </div>
           </div>
         </div>
@@ -319,15 +324,16 @@ const Index = () => {
                     alt="参赛要求"
                     className="w-[400px] object-contain bg-[#1a1a1a] rounded-xl"
                   />
-                  <a 
-                    href="https://km.sankuai.com/collabpage/2704338587"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <button 
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setIsRegisterDialogOpen(true);
+                    }}
                     className="absolute bottom-[52px] left-[80px] text-[#D4FC82] hover:text-[#e5ffa3] transition-colors duration-200 flex items-center gap-1 bg-[#202020] h-[24px] rounded"
                   >
-                    报名链接
+                    立即报名
                     <span className="text-base leading-none translate-y-[1px]">→</span>
-                  </a>
+                  </button>
                 </div>
                 <div className="relative">
                   <div className="relative w-[400px] origin-bottom-left rotate-6 group-hover:rotate-0 transition-transform duration-300">
@@ -620,6 +626,8 @@ const Index = () => {
           className="w-[1440px] object-contain"
         />
       </footer>
+
+      <RegisterDialog open={isRegisterDialogOpen} onOpenChange={setIsRegisterDialogOpen} />
 
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
