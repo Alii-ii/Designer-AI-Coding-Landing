@@ -1,0 +1,87 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('@/assets/font/JetBrainsMono-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 基础样式 */
+html, body {
+  overscroll-behavior: none;
+}
+
+/* 旋转动画 */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 3s linear infinite;
+}
+
+/* 发光动画 */
+@keyframes glow1 {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-20px, 20px) scale(1.1); }
+  66% { transform: translate(20px, -20px) scale(0.9); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+@keyframes glow2 {
+  0% { transform: translate(-50%, 0) scale(1); }
+  33% { transform: translate(-60%, 20px) scale(0.9); }
+  66% { transform: translate(-40%, -20px) scale(1.1); }
+  100% { transform: translate(-50%, 0) scale(1); }
+}
+
+@keyframes glow3 {
+  0% { transform: translate(50%, 0) scale(1); }
+  33% { transform: translate(40%, -20px) scale(1.1); }
+  66% { transform: translate(60%, 20px) scale(0.9); }
+  100% { transform: translate(50%, 0) scale(1); }
+}
+
+.animate-glow-1 {
+  animation: glow1 6s ease-in-out infinite;
+}
+
+.animate-glow-2 {
+  animation: glow2 6s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+.animate-glow-3 {
+  animation: glow3 6s ease-in-out infinite;
+  animation-delay: -4s;
+}
+
+/* 文字闪光效果 */
+.shine-text {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, #3E3E3E 0%, #3E3E3E 40%, #808080 50%, #3E3E3E 60%, #3E3E3E 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: shine 5s linear infinite;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.1em;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+} 

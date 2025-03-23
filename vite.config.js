@@ -8,7 +8,8 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 8082,
-    strictPort: true
+    strictPort: true,
+    host: '0.0.0.0'
   },
   resolve: {
     alias: {
