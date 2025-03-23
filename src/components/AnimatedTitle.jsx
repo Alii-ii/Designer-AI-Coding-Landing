@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 
-export const AnimatedTitle = ({ text }) => {
+export const AnimatedTitle = ({ text, className = "text-[36px]" }) => {
   // 动画方向和动画key
   const [direction, setDirection] = useState('left');
   const [key, setKey] = useState(0);
@@ -24,7 +24,7 @@ export const AnimatedTitle = ({ text }) => {
       onMouseEnter={handleMouseEnter}
       style={{ margin: '-40px 0' }}
     >
-      <h2 className="text-[36px] font-semibold text-white flex py-10">
+      <h2 className={`${className} font-semibold text-white flex py-10`}>
         {text.split('').map((char, index, array) => {
           // 确定字符类型和间距
           const isBracket = char === '{' || char === '}';

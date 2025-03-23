@@ -9,7 +9,16 @@ export default defineConfig({
   server: {
     port: 8082,
     strictPort: true,
-    host: '0.0.0.0'
+    host: '0.0.0.0',
+    hmr: {
+      overlay: true,
+      timeout: 30000,
+      protocol: 'ws'
+    },
+    watch: {
+      usePolling: true,
+      interval: 1000
+    }
   },
   resolve: {
     alias: {
