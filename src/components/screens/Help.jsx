@@ -1,9 +1,9 @@
 import { AnimatedTitle } from "@/components/AnimatedTitle";
-import nocodeToolImage from '@/assets/images/tools/nocode.svg';
+import nocodeToolImage from '@/assets/images/tools/NoCode@2x.png';
 import mcopilotToolImage from '@/assets/images/tools/mcopilot.svg';
-import cursorToolImage from '@/assets/images/tools/cursor.svg';
+import cursorToolImage from '@/assets/images/tools/Cursor@2x.png';
 import onlookToolImage from '@/assets/images/tools/onlook.svg';
-import v0ToolImage from '@/assets/images/tools/v0.svg';
+import v0ToolImage from '@/assets/images/tools/v0@2x.png';
 import qrcodeImage from '@/assets/images/qrcode.png';
 
 // FAQ 卡片组件
@@ -142,10 +142,10 @@ export const Help = () => {
                 <img 
                   src={qrcodeImage} 
                   alt="设计Coding群二维码"
-                  className="w-[120px] h-[120px] object-contain"
+                  className="w-[150px] h-[150px] object-contain"
                 />
               </a>
-              <div className="h-fit mt-8 font-['PingFang_SC'] text-[18px] font-light leading-[26px] text-white">
+              <div className="h-fit mt-12 font-['PingFang_SC'] text-[18px] font-light leading-[26px] text-white">
                 加入活动大象群<br/>
                 立即参赛和反馈问题
               </div>

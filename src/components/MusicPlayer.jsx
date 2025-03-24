@@ -1,12 +1,20 @@
 import { useState, useRef, useEffect } from 'react';
-import { Music2 } from 'lucide-react';
+import { Music2, Volume2, VolumeX } from 'lucide-react';
 
 // 音乐播放器组件
 export const MusicPlayer = () => {
   // 播放状态和音频引用
   const [isPlaying, setIsPlaying] = useState(false);
   const [hasInteracted, setHasInteracted] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
   const audioRef = useRef(null);
+
+  // 设置默认音量
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.3; // 设置默认音量为 30%
+    }
+  }, []);
 
   // 监听页面交互
   useEffect(() => {
