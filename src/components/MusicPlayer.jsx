@@ -5,25 +5,37 @@ import { Music2 } from 'lucide-react';
 export const MusicPlayer = () => {
   // 播放状态和音频引用
   const [isPlaying, setIsPlaying] = useState(false);
+  const [hasInteracted, setHasInteracted] = useState(false);
   const audioRef = useRef(null);
 
-  // 组件挂载时自动播放并设置音量
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = 0.5; // 设置音量
-      audioRef.current.play();
-      setIsPlaying(true);
+  // 处理音频错误
+  const handleError = (e) => {
+    console.error('音频加载错误:', e);
+    setIsPlaying(false);
+  };
+
+  // 处理音频加载
+  const handleLoadedData = () => {
+    console.log('音频加载成功');
+    if (hasInteracted) {
+      audioRef.current.play().catch(error => {
+        console.error('播放失败:', error);
+      });
     }
-  }, []);
+  };
 
   // 切换播放/暂停
   const togglePlay = () => {
     if (!audioRef.current) return;
     
+    setHasInteracted(true);
+    
     if (isPlaying) {
       audioRef.current.pause();
     } else {
-      audioRef.current.play();
+      audioRef.current.play().catch(error => {
+        console.error('播放失败:', error);
+      });
     }
     setIsPlaying(!isPlaying);
   };
@@ -61,8 +73,10 @@ export const MusicPlayer = () => {
       {/* 音频元素 */}
       <audio
         ref={audioRef}
-        src="/music/background-music.mp3"
+        src="/Designer-AI-Coding-Landing/music/background-music.mp3"
         loop
+        onError={handleError}
+        onLoadedData={handleLoadedData}
       />
     </div>
   );
