@@ -169,11 +169,11 @@ const Index = () => {
   const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-black overflow-x-hidden">
       <NavBar />
       
       {/* 首屏 */}
-      <div id="FirstScreen" className="relative w-[100vw] h-[100vh] overflow-hidden">
+      <div id="FirstScreen" className="relative w-full h-[100vh] overflow-hidden">
         {/* 模糊背景 */}
         <div className="absolute inset-0 w-full h-full">
           <img 
@@ -181,12 +181,10 @@ const Index = () => {
             alt="Background"
             className="w-full h-full object-cover blur-2xl scale-110"
           />
-          {/* 黑色背景 */}
-          {/* <div className="absolute inset-0 bg-black/40" /> */}
         </div>
         
         {/* 视频背景 */}
-        <div className="relative w-[100vw] h-[100vh] overflow-visible flex flex-col items-center justify-start"
+        <div className="relative w-full h-[100vh] overflow-hidden flex flex-col items-center justify-start"
           style={{
             WebkitMaskImage: 'linear-gradient(to right, transparent, black 400px, black calc(100% - 400px), transparent)'
           }}
