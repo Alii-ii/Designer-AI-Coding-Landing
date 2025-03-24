@@ -34,42 +34,34 @@ export const CompetitionIntro = ({ onRegisterClick }) => {
         </div>
 
         {/* 卡二: 参赛要求 */}
-        <div className="relative w-[400px] pr-0">
+        <div 
+          className="relative w-[400px] pr-0 cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            onRegisterClick();
+          }}
+        >
           <img 
             src={requirementsImage}
             alt="参赛要求"
-            className="w-[400px] object-contain bg-[#1a1a1a] rounded-xl"
+            className="w-[400px] object-contain bg-[#1a1a1a] rounded-xl hover:brightness-110 transition-all"
           />
-          <a 
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              onRegisterClick();
-            }}
-            className="absolute bottom-[52px] left-[80px] text-[#D4FC82] hover:text-[#e5ffa3] transition-colors duration-200 flex items-center gap-1 bg-[#202020] h-[24px] rounded"
-          >
-            立即报名
-            <span className="text-base leading-none translate-y-[1px]">→</span>
-          </a>
+          
         </div>
 
         {/* 卡三: 产出要求 */}
-        <div className="relative w-[400px] pr-0 origin-bottom-left rotate-6 group-hover:rotate-0 transition-transform duration-300">
+        <a 
+          href="https://ingee.meituan.com/design#/space/1/team/375/folder/10727"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative w-[400px] pr-0 origin-bottom-left rotate-6 group-hover:rotate-0 transition-transform duration-300 block"
+        >
           <img 
             src={deliverablesImage}
             alt="产出要求"
-            className="w-full object-contain bg-[#1a1a1a] rounded-xl"
+            className="w-full object-contain bg-[#1a1a1a] rounded-xl hover:brightness-110 transition-all"
           />
-          <a 
-            href="https://km.sankuai.com/collabpage/2704898611"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="absolute bottom-[48px] left-[24px] text-[#D4FC82] hover:text-[#e5ffa3] transition-colors duration-200 flex items-center gap-1 bg-[#202020] h-[24px] rounded"
-          >
-            参考链接
-            <span className="text-base leading-none translate-y-[1px]">→</span>
-          </a>
-        </div>
+        </a>
       </div>
     </section>
   );

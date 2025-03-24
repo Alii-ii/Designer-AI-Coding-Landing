@@ -81,6 +81,7 @@ export const trackData = [
     id: 12,
     title: "点餐小助手",
     department: "团购和软硬件服务设计中心",
+    description: "解决用户在不同就餐场景下找美食困难的难题，再也不用纠结“吃什么”这个哲学问题啦！业务场景：到店美食",
     order: 12
   }
 ,{

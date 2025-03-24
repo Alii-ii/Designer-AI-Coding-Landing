@@ -10,7 +10,7 @@ export const TrackOverview = () => {
   
   // 分页状态
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 6;
+  const itemsPerPage = 9;
   const totalPages = Math.ceil(sortedTrackData.length / itemsPerPage);
   
   // 自动轮播定时器引用
@@ -27,26 +27,25 @@ export const TrackOverview = () => {
     setCurrentPage(page);
   };
 
-  // 自动轮播
+  // 自动轮播(暂时关闭)
   useEffect(() => {
     // 清除之前的定时器
     if (timerRef.current) {
       clearInterval(timerRef.current);
     }
 
-    // 设置新的定时器
+    // 暂时注释掉自动轮播逻辑
+    /*
     timerRef.current = setInterval(() => {
       setCurrentPage((prevPage) => {
-        // 如果是最后一页，回到第一页
         if (prevPage >= totalPages) {
           return 1;
         }
-        // 否则前进一页
         return prevPage + 1;
       });
-    }, 5000); // 5秒切换一次
+    }, 5000);
+    */
 
-    // 组件卸载时清除定时器
     return () => {
       if (timerRef.current) {
         clearInterval(timerRef.current);
@@ -67,7 +66,7 @@ export const TrackOverview = () => {
         <span className="text-[#CAFF5E]"> 开放赛道 </span>
          和 
         <span className="text-[#FF97D4]"> 命题赛道 </span>
-         ，选手可选择任选其一或二者均参加
+         ，选手可任选其一或二者均参加
 
          <div className="font-['PingFang_SC'] text-[14px] font-normal text-white/50 mt-1">
          * 命题赛道由各设计中心出题，按照提报顺序排列
@@ -120,8 +119,17 @@ export const TrackOverview = () => {
         </div>
 
         {/* 命题赛道 */}
-        <div className="relative w-fit h-[480px]">
-          
+        <div className="relative w-fit h-[720px]">
+          {/* 左箭头 */}
+          <button 
+            className="absolute left-[-60px] top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 z-10"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            <svg width="24" height="24" viewBox="0 0 20 20" fill="currentColor" className="text-white">
+              <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" />
+            </svg>
+          </button>
 
           {/* 卡片容器 */}
           <AnimatePresence mode="wait">
@@ -177,20 +185,20 @@ export const TrackOverview = () => {
               ))}
             </motion.div>
           </AnimatePresence>
+
+          {/* 右箭头 */}
+          <button 
+            className="absolute right-[-60px] top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 z-10"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            <svg width="24" height="24" viewBox="0 0 20 20" fill="currentColor" className="text-white">
+              <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" />
+            </svg>
+          </button>
           
           {/* 页码控制区 */}
           <div className="relative w-full flex items-center justify-center gap-4 my-8">
-            {/* 左箭头 */}
-            {/* <button 
-              className="w-8 h-8 rounded-full hover:bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" className="text-white">
-                <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" />
-              </svg>
-            </button> */}
-
             {/* 页码指示器 */}
             <div className="flex gap-2 w-full justify-center">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -203,17 +211,6 @@ export const TrackOverview = () => {
                 />
               ))}
             </div>
-
-            {/* 右箭头 */}
-            {/* <button 
-              className="w-8 h-8 rounded-full hover:bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" className="text-white">
-                <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" />
-              </svg>
-            </button> */}
           </div>
         </div>
       </div>

@@ -8,6 +8,26 @@ export const MusicPlayer = () => {
   const [hasInteracted, setHasInteracted] = useState(false);
   const audioRef = useRef(null);
 
+  // 监听页面交互
+  useEffect(() => {
+    const handleInteraction = () => {
+      setHasInteracted(true);
+      if (audioRef.current && !isPlaying) {
+        audioRef.current.play().catch(error => {
+          console.error('播放失败:', error);
+        });
+        setIsPlaying(true);
+      }
+      // 移除事件监听器，因为我们只需要第一次交互
+      document.removeEventListener('click', handleInteraction);
+    };
+
+    document.addEventListener('click', handleInteraction);
+    return () => {
+      document.removeEventListener('click', handleInteraction);
+    };
+  }, []);
+
   // 处理音频错误
   const handleError = (e) => {
     console.error('音频加载错误:', e);

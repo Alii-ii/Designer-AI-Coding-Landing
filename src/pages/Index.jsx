@@ -10,6 +10,7 @@ import { Music2, Pause, VolumeX } from 'lucide-react';
 // 导入图片资源
 import posterImage from '@/assets/images/poster.svg';
 import posterTopImage from '@/assets/images/poster-top.svg';
+import videoFile from '@/assets/首屏视频.mp4';
 
 // 导入自定义组件
 import { RegisterDialog } from "@/components/RegisterDialog";
@@ -198,12 +199,12 @@ const Index = () => {
             onLoadedData={() => console.log('视频加载成功')}
             onError={(e) => console.error('视频加载错误:', e)}
           >
-            <source src="/Designer-AI-Coding-Landing/videos/poster.mp4" type="video/mp4" />
+            <source src={videoFile} type="video/mp4" />
             您的浏览器不支持视频播放。
           </video>
 
           {/* Slogen & 报名按钮 */}  
-          <div className="absolute left-1/2 -translate-x-1/2 bottom-[10vh] z-20 flex flex-col items-center gap-[3vh]">
+          <div className="absolute left-1/2 -translate-x-1/2 bottom-[10vh] z-20 flex flex-col items-center gap-[5vh]">
             {/* Slogen: ...为美好生活而设计... */}
             <img 
               id="Slogen"

@@ -96,11 +96,11 @@ export const Schedule = () => {
       <div className="w-[1440px] mx-auto">
         <div className="flex justify-center -space-x-8">
           <ProgressCard 
-            title="报名时间"
+            title="开放报名"
             time="3.24-4.3"
             description={
               <>
-                个人投稿
+                活动宣讲
                 <br />
                 填写报名表
               </>
