@@ -6,6 +6,7 @@ import { Tooltip } from "@/components/ui/tooltip";
 import { TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Music2, Pause, VolumeX } from 'lucide-react';
+import Magnet from '@/components/Magnet';
 
 // 导入图片资源
 import posterImage from '@/assets/images/poster.svg';
@@ -212,19 +213,21 @@ const Index = () => {
               alt="Poster Top"
               className="w-[75vw]"
             />
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setIsRegisterDialogOpen(true);
-              }}
-              className="inline-block h-[60px] px-8 rounded-full bg-black/30 backdrop-blur-md border-2 border-[#D4FC82] 
-                text-[#D4FC82] text-[20px] 
-                flex items-center justify-center transition-all duration-100 
-                hover:bg-[#D4FC82]/15 hover:font-medium whitespace-nowrap"
-            >
-              立即报名
-            </a>
+            <Magnet padding={50} magnetStrength={3}>
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setIsRegisterDialogOpen(true);
+                }}
+                className="inline-block h-[60px] px-8 rounded-full bg-black/30 backdrop-blur-md border-2 border-[#D4FC82] 
+                  text-[#D4FC82] text-[20px] 
+                  flex items-center justify-center transition-all duration-100 
+                  hover:bg-[#D4FC82]/15 hover:font-medium whitespace-nowrap"
+              >
+                立即报名
+              </a>
+            </Magnet>
           </div>
         </div>
       </div>

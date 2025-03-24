@@ -82,8 +82,8 @@ export const Help = () => {
                     <img
                       src={tool.image}
                       alt={tool.name}
-                      className="w-full rounded-[20px] transition-all duration-200 
-                        group-hover:ring-2 group-hover:ring-white
+                      className="w-full rounded-[26px] transition-all duration-200 
+                        group-hover:ring-2 group-hover:ring-white 
                         active:brightness-80"
                     />
                     <span className="block mt-3 text-white">{tool.name}</span>
