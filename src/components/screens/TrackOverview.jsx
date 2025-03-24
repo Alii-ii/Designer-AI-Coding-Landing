@@ -123,8 +123,8 @@ export const TrackOverview = () => {
           {/* 左箭头 */}
           <button 
             className="absolute left-[-60px] top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 z-10"
-            onClick={() => handlePageChange(currentPage - 1)}
-            disabled={currentPage === 1}
+            onClick={() => currentPage === 1 ? handlePageChange(totalPages) : handlePageChange(currentPage - 1)}
+            disabled={false}
           >
             <svg width="24" height="24" viewBox="0 0 20 20" fill="currentColor" className="text-white">
               <path d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" />
@@ -188,9 +188,8 @@ export const TrackOverview = () => {
 
           {/* 右箭头 */}
           <button 
-            className="absolute right-[-60px] top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200 z-10"
-            onClick={() => handlePageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
+            className="absolute right-[-60px] top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors duration-200 z-10"
+            onClick={() => handlePageChange(currentPage === totalPages ? 1 : currentPage + 1)}
           >
             <svg width="24" height="24" viewBox="0 0 20 20" fill="currentColor" className="text-white">
               <path d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" />

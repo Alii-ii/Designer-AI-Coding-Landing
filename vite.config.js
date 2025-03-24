@@ -13,15 +13,19 @@ export default defineConfig({
     host: '0.0.0.0',
     hmr: {
       protocol: 'ws',
-      host: 'localhost',
+      host: '0.0.0.0',
       port: 8082,
       timeout: 5000,
-      overlay: true
+      overlay: true,
+      clientPort: 8082
     },
     watch: {
       usePolling: true,
       interval: 100
-    }
+    },
+    cors: true,
+    force: true,
+    open: true
   },
   resolve: {
     alias: {
