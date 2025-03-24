@@ -1,7 +1,7 @@
 
 export const Footer = () => {
   return (
-    <footer className="w-full flex flex-col items-center justify-center py-[10vh] overflow-x-hidden overflow-y-hidden gap-[8vh]">
+    <footer className="w-full flex flex-col items-center justify-center py-[15vh] overflow-x-hidden overflow-y-hidden gap-[8vh]">
       
       {/* Slogen */}
       <div className="text-[72px] leading-[80px] tracking-[0.1em] font-['JetBrains_Mono'] font-normal text-center mb-8">

@@ -120,7 +120,7 @@ export const TrackOverview = () => {
         </div>
 
         {/* 命题赛道 */}
-        <div className="relative w-fit h-fit">
+        <div className="relative w-fit h-[480px]">
           
 
           {/* 卡片容器 */}

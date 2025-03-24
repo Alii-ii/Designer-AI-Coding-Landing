@@ -1,10 +1,13 @@
 import { AnimatedTitle } from "@/components/AnimatedTitle";
-import caseExample1Image from '@/assets/images/case/case-example1.svg';
-import caseExample2Image from '@/assets/images/case/case-example2.svg';
-import caseExample3Image from '@/assets/images/case/case-example3.svg';
-import caseExample4Image from '@/assets/images/case/case-example4.svg';
-import caseExample5Image from '@/assets/images/case/case-example5.svg';
-import caseExample6Image from '@/assets/images/case/case-example6.svg';
+import { motion } from 'framer-motion';
+import { useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import caseExample1Image from '@/assets/images/case/case1@2x.png';
+import caseExample2Image from '@/assets/images/case/case2@2x.png';
+import caseExample3Image from '@/assets/images/case/case3@2x.png';
+import caseExample4Image from '@/assets/images/case/case4@2x.png';
+import caseExample5Image from '@/assets/images/case/case5@2x.png';
+import caseExample6Image from '@/assets/images/case/case6@2x.png';
 
 export const CaseReference = () => {
   return (
@@ -31,25 +34,28 @@ export const CaseReference = () => {
             },
             {
               image: caseExample2Image,
-              url: 'https://km.sankuai.com/collabpage/2704573004',
+              url: 'https://km.sankuai.com/collabpage/2706272402?kmId=2706272402&linkType=KM',
               clickable: true
             },
             {
               image: caseExample3Image,
-              url: 'https://km.sankuai.com/collabpage/2703079719',
+              url: 'https://km.sankuai.com/community/article/2706524389',
               clickable: true
             },
             {
               image: caseExample4Image,
-              clickable: false
+              url: 'https://km.sankuai.com/community/article/2703079719',
+              clickable: true
             },
             {
               image: caseExample5Image,
-              clickable: false
+              url: 'https://km.sankuai.com/collabpage/2663688834',
+              clickable: true
             },
             {
               image: caseExample6Image,
-              clickable: false
+              url: 'https://imd.sankuai.com/files/navigate-out?target=https%3A%2F%2Fkm.sankuai.com%2Fcollabpage%2F2704573004',
+              clickable: true
             }
           ].map((item, i) => (
             <div 

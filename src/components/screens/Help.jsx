@@ -9,7 +9,7 @@ import qrcodeImage from '@/assets/images/qrcode.png';
 // FAQ 卡片组件
 const FAQCard = ({ question, answer }) => {
   return (
-    <div className="w-[600px] h-fit rounded-[20px] opacity-100
+    <div className="w-[560px] h-fit rounded-[20px] opacity-100
       flex flex-col px-[24px] pt-[18px] pb-[28px] gap-[6px] 
       box-border border border-white/30">
 
@@ -67,9 +67,9 @@ export const Help = () => {
             <div className="grid grid-cols-5 gap-4">
               {[
                 { name: 'NoCode', url: 'https://nocode.sankuai.com/', image: nocodeToolImage },
-                { name: 'MCopilot', url: 'https://mcopilot.sankuai.com/', image: mcopilotToolImage },
+                // { name: 'MCopilot', url: 'https://mcopilot.sankuai.com/', image: mcopilotToolImage },
                 { name: 'Cursor', url: 'https://www.cursor.com/cn', image: cursorToolImage },
-                { name: 'Onlook', url: 'https://onlook.com/', image: onlookToolImage },
+                // { name: 'Onlook', url: 'https://onlook.com/', image: onlookToolImage },
                 { name: 'V0', url: 'https://v0.dev/', image: v0ToolImage }
               ].map((tool, i) => (
                 <div key={i} className="text-center">
@@ -92,7 +92,7 @@ export const Help = () => {
               ))}
             </div>
 
-            <div className="flex gap-8">
+            <div className="flex gap-8 ">
               {[
                 {
                   text: 'NoCode使用手册',
@@ -109,10 +109,10 @@ export const Help = () => {
                   href={doc.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-1 text-white hover:text-[#D4FC82] transition-colors duration-200"
+                  className="flex items-center gap-1.5 text-white hover:text-[#D4FC82] transition-colors duration-200"
                 >
                   <svg
-                    className="w-4 h-4 opacity-50"
+                    className="w-5 h-5 opacity-50"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -124,7 +124,7 @@ export const Help = () => {
                       d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
                     />
                   </svg>
-                  <span className="text-base font-medium">{doc.text}</span>
+                  <span className="text-base font-light">{doc.text}</span>
                 </a>
               ))}
             </div>
@@ -133,23 +133,22 @@ export const Help = () => {
           {/* 联系我们 */}
           <div className="space-y-0">
 
-            <div className="w-[160px] h-[36px] flex items-end justify-center pb-6">
+            <div className="w-[160px] h-[36px] flex items-end justify-start pb-6">
               <AnimatedTitle text="{ 联系我们 }"className="text-[28px]"/>
             </div>
 
-            <div className="flex items-start gap-8">
+            <div className="flex items-start gap-6">
               <a href="https://applink.neixin.cn/profile?gid=69302878933" target="_blank" rel="noopener noreferrer">
                 <img 
                   src={qrcodeImage} 
                   alt="设计Coding群二维码"
-                  className="w-[100px] h-[100px] object-contain"
+                  className="w-[120px] h-[120px] object-contain"
                 />
               </a>
-              <p className="h-fit font-['PingFang_SC'] text-[18px] font-normal leading-[26px] text-white">
-                相关大赛内容<br/>
-                加入大象群<br/>
+              <div className="h-fit mt-8 font-['PingFang_SC'] text-[18px] font-light leading-[26px] text-white">
+                加入活动大象群<br/>
                 立即参赛和反馈问题
-              </p>
+              </div>
             </div>
           </div>
 
