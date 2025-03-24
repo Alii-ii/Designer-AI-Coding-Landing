@@ -169,7 +169,7 @@ const Index = () => {
   const [isRegisterDialogOpen, setIsRegisterDialogOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-black overflow-x-hidden overflow-y-hidden">
+    <div className="min-h-screen bg-black">
       <NavBar />
       
       {/* 首屏 */}
@@ -231,7 +231,7 @@ const Index = () => {
       </div>
 
       {/* 第二屏及以后 */}
-      <main id="IndexContent" className="w-full h-fit flex flex-col justify-center items-center overflow-x-hidden overflow-y-hidden">
+      <main id="IndexContent" className="w-full flex flex-col items-center">
         {/* 右侧锚点导航 */}
         <div className="fixed right-4 top-[72px] z-[100]">
           <AnchorNav sections={sections} />

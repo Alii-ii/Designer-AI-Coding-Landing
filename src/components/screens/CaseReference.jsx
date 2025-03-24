@@ -8,7 +8,7 @@ import caseExample6Image from '@/assets/images/case/case-example6.svg';
 
 export const CaseReference = () => {
   return (
-    <div id="FourthScreen" className="relative w-full h-[100vh] flex flex-col items-center">  
+    <section id="case-reference" className="w-full h-[80vh] min-h-[840px] flex flex-col items-center justify-start py-10">  
       {/* 1.标题 */}
       <div className="w-full h-[224px] flex items-end justify-center pb-10">
         <AnimatedTitle text="{ 案例参考 }" />
@@ -80,6 +80,6 @@ export const CaseReference = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 }; 

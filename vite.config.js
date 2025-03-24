@@ -8,16 +8,18 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 8082,
-    strictPort: true,
+    strictPort: false,
     host: '0.0.0.0',
     hmr: {
-      overlay: true,
-      timeout: 30000,
-      protocol: 'ws'
+      protocol: 'ws',
+      host: 'localhost',
+      port: 8082,
+      timeout: 5000,
+      overlay: true
     },
     watch: {
       usePolling: true,
-      interval: 1000
+      interval: 100
     }
   },
   resolve: {

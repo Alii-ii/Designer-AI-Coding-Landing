@@ -31,7 +31,7 @@ const FAQCard = ({ question, answer }) => {
 
 export const Help = () => {
   return (
-    <div id="SixthScreen" className="relative w-full h-[80vh] pt-[5vh] flex flex-col items-center justify-start">      
+    <section id="help" className="w-full h-[80vh] min-h-[840px] flex flex-col items-center justify-start py-10">      
       {/* 分割线 */}
       <div className="w-[100vw] h-[1px] mb-48 bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
@@ -49,7 +49,7 @@ export const Help = () => {
               answer="我们提供 AI Coding 方向的入门教程（见右侧链接），报名后将所有报名的同学建一个交流群，有任何问题都可以在群里提问，专业（技术+设计）同学会回答并提供技术支持。"
             />
             <FAQCard 
-              question="Q：是不是必须上线？"
+              question="是不是必须上线？"
               answer="不是必须，交付可交互的demo即可，但上线部署成功会赢得更多票数哦，本次活动主要是鼓励大家多多尝试 AI Coding，我们更想看到，你如何巧妙、深入、高频、大量的用 AI 实现创意，产生了值得与他人分享的经验和知识。"
             />
           </div>
@@ -155,6 +155,6 @@ export const Help = () => {
 
         </div>
       </div>
-    </div>
+    </section>
   );
 }; 
