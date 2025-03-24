@@ -5,6 +5,7 @@ import { resolve } from "path";
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: '/nocode-24e30a4c494548f4/',
   plugins: [react()],
   server: {
     port: 8082,
