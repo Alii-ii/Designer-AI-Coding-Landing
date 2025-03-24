@@ -200,7 +200,7 @@ const Index = () => {
             onLoadedData={() => console.log('视频加载成功')}
             onError={(e) => console.error('视频加载错误:', e)}
           >
-            <source src="/videos/poster.mp4" type="video/mp4" />
+            <source src="/Designer-AI-Coding-Landing/videos/poster.mp4" type="video/mp4" />
             您的浏览器不支持视频播放。
           </video>
 
