@@ -11,7 +11,6 @@ import Magnet from '@/components/Magnet';
 // 导入图片资源
 import posterImage from '@/assets/images/poster.svg';
 import posterTopImage from '@/assets/images/poster-top.svg';
-import videoFile from '@/assets/首屏视频.mp4';
 
 // 导入自定义组件
 import { RegisterDialog } from "@/components/RegisterDialog";
@@ -200,7 +199,7 @@ const Index = () => {
             onLoadedData={() => console.log('视频加载成功')}
             onError={(e) => console.error('视频加载错误:', e)}
           >
-            <source src={videoFile} type="video/mp4" />
+            <source src="https://s3plus.meituan.net/nocode/nocode_image/%E8%AE%BE%E8%AE%A1%E9%83%A8%20AI%20Coding%20Landing%20Asset/%E9%A6%96%E9%A1%B5%E8%A7%86%E9%A2%91.mp4" type="video/mp4" />
             您的浏览器不支持视频播放。
           </video>
 
