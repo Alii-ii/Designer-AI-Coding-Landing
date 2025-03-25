@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main, temp/ai-439b63ac ]
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -18,15 +18,25 @@ jobs:
           node-version: '18'
           
       - name: Install Dependencies
-        run: npm ci
+        run: |
+          npm install
+          npm list
         
       - name: Build
-        run: npm run build
+        run: |
+          echo "Node version: $(node -v)"
+          echo "NPM version: $(npm -v)"
+          npm run build --verbose
         env:
           NODE_ENV: production
           CI: false
 
+      - name: List dist directory
+        if: always()
+        run: ls -la dist || echo "dist directory not found"
+
       - name: Deploy
+        if: success()
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
