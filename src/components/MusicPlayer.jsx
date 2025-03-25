@@ -101,7 +101,7 @@ export const MusicPlayer = () => {
       {/* 音频元素 */}
       <audio
         ref={audioRef}
-        src="/Designer-AI-Coding-Landing/music/background-music.mp3"
+        src="https://s3plus.meituan.net/nocode/nocode_image/%E8%AE%BE%E8%AE%A1%E9%83%A8%20AI%20Coding%20Landing%20Asset/background-music.mp3"
         loop
         onError={handleError}
         onLoadedData={handleLoadedData}
