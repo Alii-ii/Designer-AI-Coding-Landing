@@ -5,6 +5,9 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -12,32 +15,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Install Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          
-      - name: Install Dependencies
+
+      - name: Install dependencies
         run: |
           npm install
-          npm list
+          npm ci
         
       - name: Build
-        run: |
-          echo "Node version: $(node -v)"
-          echo "NPM version: $(npm -v)"
-          npm run build --verbose
+        run: npm run build
         env:
           NODE_ENV: production
           CI: false
 
-      - name: List dist directory
-        if: always()
-        run: ls -la dist || echo "dist directory not found"
-
-      - name: Deploy
-        if: success()
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          folder: dist
-          branch: gh-pages 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          force_orphan: true 
