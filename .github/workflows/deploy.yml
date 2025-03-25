@@ -4,6 +4,15 @@ on:
   push:
     branches: [ gh-pages-deploy ]
   workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to deploy'
+        required: true
+        default: 'gh-pages-deploy'
+        type: choice
+        options:
+          - gh-pages-deploy
+          - main
 
 permissions:
   contents: write
@@ -14,6 +23,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref }}
 
       - name: Install Node.js
         uses: actions/setup-node@v4
