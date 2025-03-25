@@ -1,10 +1,17 @@
-
 export const Footer = () => {
   return (
     <footer className="w-full flex flex-col items-center justify-center py-[15vh] overflow-x-hidden overflow-y-hidden gap-[8vh]">
       
       {/* Slogen */}
-      <div className="text-[72px] leading-[80px] tracking-[0.1em] font-['JetBrains_Mono'] font-normal text-center mb-8">
+      <div 
+        className="text-[72px] leading-[80px] tracking-[0.1em] font-['JetBrains_Mono'] font-normal text-center mb-8 cursor-pointer"
+        onClick={() => {
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+        }}
+      >
         <div className={`
           bg-[length:200%_100%]
           bg-gradient-to-r from-[#3E3E3E] via-[#FFFFFF] to-[#3E3E3E]
