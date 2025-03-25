@@ -15,7 +15,7 @@ permissions:
 # Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -23,23 +23,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
       
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '18'
+          cache: 'npm'
           
       - name: Install Dependencies
-        run: |
-          npm install
-          npm ci
+        run: npm ci
         
       - name: Build
         run: npm run build
         env:
           NODE_ENV: production
+          CI: false
         
       - name: Setup Pages
         uses: actions/configure-pages@v4
