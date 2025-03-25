@@ -7,6 +7,7 @@ import { TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui
 import { motion, AnimatePresence } from 'framer-motion';
 import { Music2, Pause, VolumeX } from 'lucide-react';
 import Magnet from '@/components/Magnet';
+import { getResourceUrl } from "@/utils/env";
 
 // 导入图片资源
 import posterImage from '@/assets/images/poster.svg';
@@ -199,7 +200,13 @@ const Index = () => {
             onLoadedData={() => console.log('视频加载成功')}
             onError={(e) => console.error('视频加载错误:', e)}
           >
-            <source src="https://s3plus.meituan.net/nocode/nocode_image/%E8%AE%BE%E8%AE%A1%E9%83%A8%20AI%20Coding%20Landing%20Asset/%E9%A6%96%E9%A1%B5%E8%A7%86%E9%A2%91.mp4" type="video/mp4" />
+            <source 
+              src={getResourceUrl(
+                "https://s3plus.meituan.net/nocode/nocode_image/%E8%AE%BE%E8%AE%A1%E9%83%A8%20AI%20Coding%20Landing%20Asset/%E9%A6%96%E9%A1%B5%E8%A7%86%E9%A2%91.mp4",
+                "/assets/videos/landing-video.mp4"
+              )} 
+              type="video/mp4" 
+            />
             您的浏览器不支持视频播放。
           </video>
 

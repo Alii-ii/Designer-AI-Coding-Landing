@@ -76,7 +76,7 @@ export const Schedule = () => {
     <section id="schedule" className="w-full h-fit min-h-[840px] flex flex-col items-center justify-start mt-[15vh]">
       {/* 1.标题 */}
       <div className="w-full h-fit flex items-end justify-center pb-10">
-        <AnimatedTitle text="{ 赛程&奖项 }" />
+        <AnimatedTitle text="{ 赛程安排&奖项 }" />
       </div>
 
       {/* 2.赛程说明 */}

@@ -1,9 +1,6 @@
 @font-face {
-  font-family: 'JetBrains Mono';
-  src: url('https://s3plus.meituan.net/nocode/nocode_image/%E8%AE%BE%E8%AE%A1%E9%83%A8%20AI%20Coding%20Landing%20Asset/JetBrainsMono-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+  font-family: 'JetBrainsMono';
+  src: url('/assets/fonts/JetBrainsMono-Regular.ttf') format('truetype');
 }
 
 /* 基础样式 */

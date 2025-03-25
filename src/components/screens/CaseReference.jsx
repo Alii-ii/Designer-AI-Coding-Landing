@@ -2,12 +2,13 @@ import { AnimatedTitle } from "@/components/AnimatedTitle";
 import { motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import caseExample1Image from '@/assets/images/case/case1@2x.png';
-import caseExample2Image from '@/assets/images/case/case2@2x.png';
-import caseExample3Image from '@/assets/images/case/case3@2x.png';
-import caseExample4Image from '@/assets/images/case/case4@2x.png';
-import caseExample5Image from '@/assets/images/case/case5@2x.png';
-import caseExample6Image from '@/assets/images/case/case6@2x.png';
+import { getResourceUrl } from "@/utils/env";
+
+const getCaseImageUrl = (caseNumber) => {
+  const internalUrl = `https://s3plus.meituan.net/nocode/nocode_image/%E8%AE%BE%E8%AE%A1%E9%83%A8%20AI%20Coding%20Landing%20Asset/case${caseNumber}%402x.png`;
+  const externalUrl = `/assets/images/cases/case${caseNumber}@2x.png`;
+  return getResourceUrl(internalUrl, externalUrl);
+};
 
 export const CaseReference = () => {
   return (
@@ -28,37 +29,37 @@ export const CaseReference = () => {
         <div className="grid grid-cols-3 gap-6 relative z-10">
           {[
             {
-              image: caseExample2Image,
+              image: getCaseImageUrl(2),
               url: 'https://km.sankuai.com/collabpage/2706272402?kmId=2706272402&linkType=KM',
               title: '数据看板 · 刘致闻',
               distribution: '美团平台/用户增长与运营部'
             },
             {
-              image: caseExample3Image,
+              image: getCaseImageUrl(3),
               url: 'https://km.sankuai.com/community/article/2706524389',
               title: '浏览器插件 · 邹骁',
               distribution: '基础研发平台/企业平台研发部'
             },
             {
-              image: caseExample4Image,
+              image: getCaseImageUrl(4),
               url: 'https://km.sankuai.com/community/article/2703079719',
               title: 'B 端平台 · 任启盈',
               distribution: '基础研发平台/企业平台研发部'
             },
             {
-              image: caseExample5Image,
+              image: getCaseImageUrl(5),
               url: 'https://km.sankuai.com/collabpage/2663688834',
               title: '移动 App 开发 · 张政',
               distribution: '基础研发平台/计算智能和平台部'
             },
             {
-              image: caseExample6Image,
+              image: getCaseImageUrl(6),
               url: 'https://imd.sankuai.com/files/navigate-out?target=https%3A%2F%2Fkm.sankuai.com%2Fcollabpage%2F2704573004',
               title: '小程序开发 · 杨思娜',
               distribution: '外卖事业部/产品部'
             },
             {
-              image: caseExample1Image,
+              image: getCaseImageUrl(1),
               url: 'https://km.sankuai.com/collabpage/2677633608',
               title: '网页开发 · 黄奕礼',
               distribution: '平台产品部/设计部/基础研发平台设计中心'

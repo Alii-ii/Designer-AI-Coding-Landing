@@ -1,7 +1,11 @@
 import { AnimatedTitle } from "@/components/AnimatedTitle";
-import highlightsImage from '@/assets/images/intro/highlights.svg';
-import requirementsImage from '@/assets/images/intro/requirements.svg';
-import deliverablesImage from '@/assets/images/intro/deliverables.svg';
+import { getResourceUrl } from "@/utils/env";
+
+const getIntroImageUrl = (filename) => {
+  const internalUrl = `https://s3plus.meituan.net/nocode/nocode_image/%E8%AE%BE%E8%AE%A1%E9%83%A8%20AI%20Coding%20Landing%20Asset/${filename}`;
+  const externalUrl = `/assets/images/intro/${filename}`;
+  return getResourceUrl(internalUrl, externalUrl);
+};
 
 export const CompetitionIntro = ({ onRegisterClick }) => {
   return (
@@ -27,7 +31,7 @@ export const CompetitionIntro = ({ onRegisterClick }) => {
         {/* 卡一: 活动亮点 */}
         <div className="relative w-[400px] pr-0">
           <img 
-            src={highlightsImage}
+            src={getIntroImageUrl('highlights.svg')}
             alt="活动亮点"
             className="w-full object-contain bg-[#1a1a1a] rounded-xl origin-bottom-right -rotate-6 group-hover:rotate-0 transition-transform duration-300"
           />
@@ -42,7 +46,7 @@ export const CompetitionIntro = ({ onRegisterClick }) => {
           }}
         >
           <img 
-            src={requirementsImage}
+            src={getIntroImageUrl('requirements.svg')}
             alt="参赛要求"
             className="w-[400px] object-contain bg-[#1a1a1a] rounded-xl hover:brightness-110 transition-all"
           />
@@ -57,7 +61,7 @@ export const CompetitionIntro = ({ onRegisterClick }) => {
           className="relative w-[400px] pr-0 origin-bottom-left rotate-6 group-hover:rotate-0 transition-transform duration-300 block"
         >
           <img 
-            src={deliverablesImage}
+            src={getIntroImageUrl('deliverables.svg')}
             alt="产出要求"
             className="w-full object-contain bg-[#1a1a1a] rounded-xl hover:brightness-110 transition-all"
           />

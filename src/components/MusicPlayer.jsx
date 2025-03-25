@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Music2, Volume2, VolumeX } from 'lucide-react';
+import { getResourceUrl } from "@/utils/env";
 
 // 音乐播放器组件
 export const MusicPlayer = () => {
@@ -101,7 +102,10 @@ export const MusicPlayer = () => {
       {/* 音频元素 */}
       <audio
         ref={audioRef}
-        src="https://s3plus.meituan.net/nocode/nocode_image/%E8%AE%BE%E8%AE%A1%E9%83%A8%20AI%20Coding%20Landing%20Asset/background-music.mp3"
+        src={getResourceUrl(
+          "https://s3plus.meituan.net/nocode/nocode_image/%E8%AE%BE%E8%AE%A1%E9%83%A8%20AI%20Coding%20Landing%20Asset/background-music.mp3",
+          "/assets/audio/background-music.mp3"
+        )}
         loop
         onError={handleError}
         onLoadedData={handleLoadedData}
