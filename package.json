@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite --force --clearScreen false",
-    "build": "vite build",
+    "build": "vite build --emptyOutDir",
     "build:dev": "vite build --mode development",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "clean": "rm -rf dist node_modules/.vite"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
