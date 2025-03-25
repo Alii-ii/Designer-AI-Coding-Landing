@@ -5,10 +5,17 @@ on:
     branches: [ main ]
   workflow_dispatch:
 
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
+  deployments: write
+
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -16,23 +23,31 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
           
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm install
+          npm ci
         
       - name: Build
         run: npm run build
+        env:
+          NODE_ENV: production
+        
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: dist
 
   deploy:
     environment:
