@@ -1,5 +1,4 @@
 import { AnimatedTitle } from "@/components/AnimatedTitle";
-import trackDetailsImage from '@/assets/images/track/track-details.svg';
 import { trackData } from '@/config/trackData';
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
